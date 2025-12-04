@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     slideIndex++;
     if (slideIndex > slides.length) {slideIndex = 1}
     slides[slideIndex-1].style.display = "block";
-    setTimeout(showSlides, 2000); // Change image every 2 seconds
+    setTimeout(showSlides, 5000); // Change image every 2 seconds
     }
 
     //code taken from https://www.w3schools.com/howto/howto_js_slideshow.asp
