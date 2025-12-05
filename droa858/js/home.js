@@ -29,14 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // ------------------- Display the next slide.
 
-        // Increment the slide.
-        slideIndex++;
+        
 
         // Wrap around the slide index.
-        if (slideIndex > slides.length) { slideIndex = 1 }
+        if (slideIndex === slides.length) { slideIndex = 0 }
 
         // Display the slide.
-        slides[slideIndex - 1].style.display = "block";
+        slides[slideIndex].style.display = "block";
+
+        // Increment the slide.
+        slideIndex++;
 
         // Change image every 2 seconds
         setTimeout(showSlides, SLIDESHOW_DELAY); 
