@@ -1,27 +1,49 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const home = document.querySelector(".home")
-    //removes the hidden CSS so home can appear
-    home.classList.remove("hidden");
+    // Initialize
+    const home = document.querySelector(".home");
+    const browse = document.querySelector(".browse");
+    const slides = document.getElementsByClassName("banner");
 
-    const browse = document.querySelector(".browse")
-    browse.classList.add("hidden");
+    // Configurable variables
+    const SLIDESHOW_DELAY = 5000; // in ms.
 
+    // Internal variables
     let slideIndex = 0;
+
+    // Functions
+    /**
+     * Begins playing the slideshow.
+     */
+    function showSlides() {
+
+        // ------------------ Hide all slides.
+
+        // For every slide, 
+        for (let i = 0; i < slides.length; i++) {
+
+            // Hide the slide.
+            slides[i].style.display = "none";
+
+        }
+
+        // ------------------- Display the next slide.
+
+        // Increment the slide.
+        slideIndex++;
+
+        // Wrap around the slide index.
+        if (slideIndex > slides.length) { slideIndex = 1 }
+
+        // Display the slide.
+        slides[slideIndex - 1].style.display = "block";
+
+        // Change image every 2 seconds
+        setTimeout(showSlides, SLIDESHOW_DELAY); 
+    }
+    
     showSlides();
 
-    function showSlides() {
-        let i;
-        let slides = document.getElementsByClassName("banner");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) { slideIndex = 1 }
-        slides[slideIndex - 1].style.display = "block";
-        setTimeout(showSlides, 5000); // Change image every 2 seconds
-    }
-
     //code taken from https://www.w3schools.com/howto/howto_js_slideshow.asp
-    
+
 });

@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Initialize
     const browseBtn = document.querySelector("#browse");
     const browse = document.querySelector(".browse")
     const home = document.querySelector(".home");
 
+    // Add browse click handler.
     browseBtn.addEventListener("click", (e) => {
 
         e.preventDefault();
@@ -11,5 +13,5 @@ document.addEventListener("DOMContentLoaded", () => {
         browse.classList.remove("hidden");
 
     });
-    
+
 });
