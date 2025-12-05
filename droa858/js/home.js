@@ -29,8 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // ------------------- Display the next slide.
 
-        
-
         // Wrap around the slide index.
         if (slideIndex === slides.length) { slideIndex = 0 }
 
