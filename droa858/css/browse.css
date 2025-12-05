@@ -1,4 +1,22 @@
 .browse{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+#filter{
+    grid-column: 1/2;
+    background-color: #131617;
+    border: solid 1px;
+}
+
+
+#filter h2{
+    text-align: center;
+}
+
+#items{
+    grid-column: 2/4;
+    background-color: #131617;
+    border: solid 1px;
 }
