@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const browse = document.querySelector(".browse");
     const home = document.querySelector(".home");
     const colorsDiv = document.querySelector("#color");
+    const colorTemplate = document.querySelector("#color-template");
     const colorURL = "json/colors.json";
 
     // Navigate pages
@@ -39,20 +40,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 const color = groupedColors[i];
                 
                 // Create the div.
-                const div = document.createElement("div");
-                div.classList.add("color-option");
+                const div = colorTemplate.content.cloneNode(true);
 
-                div.innerHTML = `
-                    <input type="checkbox" id="color-${color.toLowerCase()}" name="color-${color.toLowerCase()}">
-                    <label for="color-${color.toLowerCase()}">
-                        <span class="color-box"></span>
-                        ${color}
-                    </label>
-                `;
-                
-                // Fill the color box with the approriate color
+                const input = div.querySelector("input");
+                input.setAttribute("id", "color-" + color.toLowerCase());
+                input.setAttribute("name", "color-" + color.toLowerCase());
+
+                const label = div.querySelector("label");
+                label.setAttribute("for", "color-" + color.toLowerCase());
+
                 const span = div.querySelector(".color-box");
                 span.style.backgroundColor = colorHexMap[color];
+
+                const text = div.querySelector("#color-text");
+                text.textContent = color;
 
                 // Append it.
                 colorsDiv.appendChild(div);

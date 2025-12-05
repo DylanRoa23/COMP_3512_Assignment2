@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <script src="js/home.js"></script>
     <script src="js/browse.js"></script>
 </head>
+
 <body>
     <header>
         <nav>
@@ -23,7 +25,7 @@
 
 
     <!-- Putting the website on HTML first to visualize it -->
-     <!-- Home page, what the website looks when someone is on the home page -->
+    <!-- Home page, what the website looks when someone is on the home page -->
     <article class="home">
         <div class="slideshow-container">
             <div class="banner fade">
@@ -73,7 +75,7 @@
                 <label for="Outwear">Outwear</label>
                 <input type="checkbox" name="Outwear" id="Outwear">
             </div>
-            
+
             <div id="size">
                 <h3>Size</h3>
                 <label for="XS">Extra Small</label>
@@ -90,10 +92,20 @@
 
             <div id="color">
                 <h3>Colors</h3>
+                <template id="color-template">
+                    <div class="color-option">
+                        <input type="checkbox" id="" name="color-${color.toLowerCase()}">
+                        <label for="color-${color.toLowerCase()}">
+                            <span class="color-box"></span>
+                            <span id="color-text">MISSING COLOR</span>
+                        </label>
+                    </div>
+                </template>
             </div>
         </div>
         <div id="items">5</div>
     </article>
 
 </body>
+
 </html>
