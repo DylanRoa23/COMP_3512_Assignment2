@@ -20,3 +20,18 @@
     background-color: #131617;
     border: solid 1px;
 }
+
+.color-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.color-box {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 5px;
+    border: 1px solid #ffffff; 
+}
+
