@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    const hidden = document.querySelector(".home")
+    //removes the hidden CSS so home can appear
+    hidden.classList.remove("hidden");
+
     let slideIndex = 0;
     showSlides();
 
