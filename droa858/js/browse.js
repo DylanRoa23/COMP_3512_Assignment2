@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Initialize
     const browseBtn = document.querySelector("#browse");
     const homeBtn = document.querySelector("#home");
     const browse = document.querySelector(".browse");
