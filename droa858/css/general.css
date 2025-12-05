@@ -27,3 +27,7 @@ nav > a {
     color: white;
     padding: 5px 25px;
 }
+
+.hidden{
+  display: none !important;
+}

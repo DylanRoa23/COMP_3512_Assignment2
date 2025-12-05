@@ -1,8 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const hidden = document.querySelector(".home")
+    const home = document.querySelector(".home")
     //removes the hidden CSS so home can appear
-    hidden.classList.remove("hidden");
+    home.classList.remove("hidden");
+
+    const browse = document.querySelector(".browse")
+    browse.classList.add("hidden");
 
     let slideIndex = 0;
     showSlides();
