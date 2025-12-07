@@ -1,25 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize
-    const browseBtn = document.querySelector("#browse");
-    const homeBtn = document.querySelector("#home");
-    const browse = document.querySelector(".browse");
-    const home = document.querySelector(".home");
     const colorsDiv = document.querySelector("#color");
     const colorTemplate = document.querySelector("#color-template");
     const colorURL = "json/colors.json";
-
-    // Navigate pages
-    browseBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        home.classList.add("hidden");
-        browse.classList.remove("hidden");
-    });
-    homeBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        browse.classList.add("hidden");
-        home.classList.remove("hidden");
-    });
 
     // Fetch colors.json which has basic colors plus equivalents 
     // So yellow will show gold colored clothes and black will show charcoal
