@@ -1,3 +1,5 @@
+import { getClothing } from "./api.js";
+
 document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize
