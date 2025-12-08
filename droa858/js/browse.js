@@ -48,4 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch(err => console.error("Error loading colors:", err));
 
+    // Remove All button clears every checkbox in the filter section
+    const removeBtn = document.getElementById("removeBtn");
+
+    removeBtn.addEventListener("click", () => {
+        const allCheckboxes = document.querySelectorAll("#filter input[type='checkbox']");
+        allCheckboxes.forEach(checkBoxes => checkBoxes.checked = false);
+});
+
 });
