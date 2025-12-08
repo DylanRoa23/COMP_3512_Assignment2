@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // Configuarable Variables
-    const homeBtn = document.querySelector("#home");
-    const browseBtn = document.querySelector("#browse");
-    const aboutBtn = document.querySelector("#about");
-    const home = document.querySelector(".home");
-    const browse = document.querySelector(".browse");
-    const about = document.querySelector(".about");
+    const home = document.querySelector("#home");
+    const browse = document.querySelector("#browse");
+    const about = document.querySelector("#about");
+    const homeBtn = document.querySelector(".homeBtn");
+    const browseBtn = document.querySelector(".browseBtn");
+    const aboutBtn = document.querySelector(".aboutBtn");
 
     // System Variables
     const Pages = {
