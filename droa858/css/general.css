@@ -1,7 +1,12 @@
+:root {
+    --text-color: white;
+    --a-color: white;
+}
+
 body{
     margin: 0;
     background-color: black;
-    color: white;
+    color: var(--text-color);
 }
 
 header {
@@ -24,10 +29,14 @@ nav > a {
     padding: 1% 1% 1% 1%;
     font-size: large;
     font-weight: bold;
-    color: white;
+    color: var(--a-color);
     padding: 5px 25px;
 }
 
 .hidden{
   display: none !important;
+}
+
+a {
+    color: var(--a-color);
 }
