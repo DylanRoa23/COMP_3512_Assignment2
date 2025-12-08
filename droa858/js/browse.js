@@ -18,13 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Only use the grouped color names from hex map
             const groupedColors = Object.keys(colorHexMap).sort(); // sorted alphabetically
-            
+
             // Makes a checkbox for the colors
             for (let i = 0; i < groupedColors.length; i++) {
 
                 // Initialize
                 const color = groupedColors[i];
-                
+
                 // Create the div.
                 const div = colorTemplate.content.cloneNode(true);
 
@@ -54,6 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
     removeBtn.addEventListener("click", () => {
         const allCheckboxes = document.querySelectorAll("#filter input[type='checkbox']");
         allCheckboxes.forEach(checkBoxes => checkBoxes.checked = false);
-});
+    });
 
 });
