@@ -4,9 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const home = document.querySelector("#home");
     const browse = document.querySelector("#browse");
     const about = document.querySelector("#about");
-    const homeBtn = document.querySelector(".homeBtn");
-    const browseBtn = document.querySelector(".browseBtn");
-    const aboutBtn = document.querySelector(".aboutBtn");
+    const navhome = document.querySelector("#navhome");
+    const navbrowse = document.querySelector("#navbrowse");
+    const navabout = document.querySelector("#navabout");
+    const homeBtns = document.querySelectorAll(".homeBtn");
+    const browseBtns = document.querySelectorAll(".browseBtn");
+    const aboutBtns = document.querySelectorAll(".aboutBtn");
 
     // System Variables
     const Pages = {
@@ -14,6 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
         browse: browse,
         about: about,
     };
+    const NavPages = {
+        home: navhome,
+        browse: navbrowse,
+        about: navabout,
+    }
 
     // Functions
     /**
@@ -44,14 +52,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+        // For every page highlight,
+        for (const key in NavPages) {
+
+            // Initialize
+            const p = NavPages[key];
+
+            // If the page exists,
+            if (p) {
+
+                // Hide it.
+                p.classList.remove("navhighlight");
+
+            }
+            // Otherwise,
+            else {
+
+                // Throw a warning in console.
+                console.warn("Warning: The page \"" + key + "\" is missing.");
+
+            }
+
+        }
+
     }
 
     /**
-     * Displays a page, cancelling the default event. Event handler function.
+     * Displays a page, cancelling the default event. Also highlights the page's div in the nav.
      * @param {PointerEvent} e The event trigger. 
      * @param {HTMLArticleElement} page The page to display.
+     * @param {HTMLDivElement} navdiv The page's div in nav.
      */
-    function displayPage(e, page) {
+    function displayPage(e, page, navdiv) {
 
         // Cancel default link action.
         e.preventDefault();
@@ -61,6 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Display this page.
         page.classList.remove("hidden");
+        
+        // Highlight the page's div in nav.
+        navdiv.classList.add("navhighlight");
 
     }
 
@@ -69,9 +104,19 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function main() {
 
-        // Navigate pages.
-        homeBtn.addEventListener("click", e => { displayPage(e, home) });
-        browseBtn.addEventListener("click", e => { displayPage(e, browse) });
+        // Listen for buttons.
+        homeBtns.forEach(b => {
+
+            // Attach listener.
+            b.addEventListener("click", e => { displayPage(e, home, navhome) });
+
+        })
+        browseBtns.forEach(b => {
+
+            // Attach listener.
+            b.addEventListener("click", e => { displayPage(e, browse, navbrowse) });
+
+        })
 
     }
 
