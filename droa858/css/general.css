@@ -30,7 +30,7 @@ nav {
 
 nav > div {
     flex-grow: 1;
-    height: 4.5rem;
+    height: 3.5rem;
     text-align: center;
     display: flex;
     align-items: center;
