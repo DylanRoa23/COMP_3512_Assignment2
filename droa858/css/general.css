@@ -30,15 +30,19 @@ nav {
 
 nav > div {
     flex-grow: 1;
-    padding: 0.7rem;
+    height: 4.5rem;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 nav > div:hover {
     background-color: var(--nav-hover-color);
 }
 
-nav > div > a {
+nav > div > p {
     padding: 1% 1% 1% 1%;
     font-size: large;
     font-weight: bold;
@@ -71,4 +75,8 @@ footer {
 
 .dimmed {
     color: var(--dimmed-color);
+}
+
+.navhighlight {
+    background-color: var(--nav-hover-color);
 }
