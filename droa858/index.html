@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/browse.css">
+    <link rel="stylesheet" href="css/about.css">
     <script type="module" src="js/api.js"></script>
     <script src="js/header.js"></script>
     <script src="js/home.js"></script>
@@ -173,25 +174,27 @@
 
     </article>
 
-    <dialog id="about">
-        <h2>About This Website</h2>
-        <p>
-            This website is an online clothing store with a vast variety of items available for selection.
-            With various filters to help shoppers find items that match their taste more easily.
-        </p>
-        <p>
-            This website was made using HTML/CSS for the basic layout + styling, while most of the website 
-            was dynamically generated using JavaScript.
-        </p>
-        <p>
-            This website was built by <strong>Dylan Roa</strong> and <strong>Kyle Chen</strong>.  
-            Our work can be found on our 
-            <a href="https://github.com/DylanRoa23/COMP_3512_Assignment2" target="_blank">
-                GitHub Repository
-            </a>
-        </p>
-        <button id="closeAbout">Close</button>
-    </dialog>
+    <article id="about" class="hidden">
+        <dialog>
+            <h2>About This Website</h2>
+            <p>
+                This website is an online clothing store with a vast variety of items available for selection.
+                With various filters to help shoppers find items that match their taste more easily.
+            </p>
+            <p>
+                This website was made using HTML/CSS for the basic layout + styling, while most of the website
+                was dynamically generated using JavaScript.
+            </p>
+            <p>
+                This website was built by <strong>Dylan Roa</strong> and <strong>Kyle Chen</strong>.
+                Our work can be found on our
+                <a href="https://github.com/DylanRoa23/COMP_3512_Assignment2" target="_blank">
+                    GitHub Repository
+                </a>
+            </p>
+            <button id="closeAbout">Close</button>
+        </dialog>
+    </article>
 
     <footer>
         <p><a>Github Page</a></p>

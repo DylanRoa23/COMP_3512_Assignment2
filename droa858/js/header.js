@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const home = document.querySelector("#home");
     const browse = document.querySelector("#browse");
     const about = document.querySelector("#about");
+    const aboutDialog = document.querySelector("#about > dialog");
     const navhome = document.querySelector("#navhome");
     const navbrowse = document.querySelector("#navbrowse");
     const navabout = document.querySelector("#navabout");
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const Pages = {
         home: home,
         browse: browse,
-        // about: about,
+        about: about,
     };
     const NavPages = {
         home: navhome,
@@ -122,7 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // Attach listener.
             b.addEventListener("click", e => {
                 e.preventDefault();
-                about.showModal();
+                about.classList.remove("hidden");
+                aboutDialog.showModal();
             });
 
         })

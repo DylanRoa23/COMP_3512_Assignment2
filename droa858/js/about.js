@@ -2,11 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Configurable variables.
     const about = document.querySelector("#about");
+    const dialog = document.querySelector("#about > dialog");
 
     // Close dialog when clicking the close button
-    about.addEventListener("click", (e) => {
+    dialog.addEventListener("click", (e) => {
         if (e.target.id === "closeAbout") {
-            about.close();
+            dialog.close();
+            about.classList.add("hidden");
         }
     });
     
