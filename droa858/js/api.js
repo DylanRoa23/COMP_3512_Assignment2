@@ -33,6 +33,7 @@ function fetchApi(api) {
 /**
  * Gets the saved clothing data.
  * @returns A Promise<Array>. The array contains the clothing data.
+ * @throws SyntaxError If localStorage[CLOTHING_KEY] is not valid JSON.
  */
 export async function getClothing() {
 
