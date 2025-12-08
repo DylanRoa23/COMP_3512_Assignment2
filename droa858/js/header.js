@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const Pages = {
         home: home,
         browse: browse,
-        about: about,
+        // about: about,
     };
     const NavPages = {
         home: navhome,
