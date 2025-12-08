@@ -1,11 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Initialize
+    // Configurable variables
     const home = document.querySelector(".home");
     const browse = document.querySelector(".browse");
     const slides = document.getElementsByClassName("banner");
-
-    // Configurable variables
     const SLIDESHOW_DELAY = 5000; // in ms.
 
     // Internal variables
