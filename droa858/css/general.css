@@ -53,6 +53,7 @@ nav > div > p {
 
 a:link {
     text-decoration: inherit;
+    color: inherit;
 }
 
 a:visited {
