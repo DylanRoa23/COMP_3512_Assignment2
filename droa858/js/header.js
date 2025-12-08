@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Display this page.
         page.classList.remove("hidden");
-        
+
         // Highlight the page's div in nav.
         navdiv.classList.add("navhighlight");
 
@@ -115,6 +115,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Attach listener.
             b.addEventListener("click", e => { displayPage(e, browse, navbrowse) });
+
+        })
+        aboutBtns.forEach(b => {
+
+            // Attach listener.
+            b.addEventListener("click", e => {
+                e.preventDefault();
+                about.showModal();
+            });
 
         })
 
