@@ -1,6 +1,10 @@
+/* --------------------------- Main elements. */
+
 :root {
     --text-color: white;
     --a-color: white;
+    --semantics-bg-color: #282A35;
+    --dimmed-color: rgb(197, 197, 197);
 }
 
 body{
@@ -13,6 +17,7 @@ header {
     grid-row: 1;
     grid-column: 1/3;
     min-height: 50px;
+    background-color: var(--semantics-bg-color);
 }
 
 nav {
@@ -22,7 +27,6 @@ nav {
     border: solid black; 
     border-width: 3px 0px;
     height: 50px;
-    background-color: #282A35;
 }
 
 nav > a {
@@ -33,10 +37,29 @@ nav > a {
     padding: 5px 25px;
 }
 
-.hidden{
+a:link {
+    text-decoration: inherit;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--semantics-bg-color);
+}
+
+/* --------------------------- Special classes. */
+.hidden {
   display: none !important;
 }
 
-a {
-    color: var(--a-color);
+.dimmed {
+    color: var(--dimmed-color);
 }
