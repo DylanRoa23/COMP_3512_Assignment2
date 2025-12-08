@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const home = document.querySelector("#home");
     const browse = document.querySelector("#browse");
     const about = document.querySelector("#about");
-    const homeBtn = document.querySelector(".homeBtn");
-    const browseBtn = document.querySelector(".browseBtn");
-    const aboutBtn = document.querySelector(".aboutBtn");
+    const homeBtns = document.querySelectorAll(".homeBtn");
+    const browseBtns = document.querySelectorAll(".browseBtn");
+    const aboutBtns = document.querySelectorAll(".aboutBtn");
 
     // System Variables
     const Pages = {
@@ -69,9 +69,19 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function main() {
 
-        // Navigate pages.
-        homeBtn.addEventListener("click", e => { displayPage(e, home) });
-        browseBtn.addEventListener("click", e => { displayPage(e, browse) });
+        // Listen for buttons.
+        homeBtns.forEach(b => {
+
+            // Attach listener.
+            b.addEventListener("click", e => { displayPage(e, home) });
+
+        })
+        browseBtns.forEach(b => {
+
+            // Attach listener.
+            b.addEventListener("click", e => { displayPage(e, browse) });
+
+        })
 
     }
 
