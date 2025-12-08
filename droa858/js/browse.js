@@ -2,7 +2,7 @@ import { getClothing } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Initialize
+    // Configurable variables
     const colorsDiv = document.querySelector("#color");
     const colorTemplate = document.querySelector("#color-template");
     const colorURL = "json/colors.json";
