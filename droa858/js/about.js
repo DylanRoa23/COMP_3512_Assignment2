@@ -6,22 +6,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeBtns = document.querySelectorAll(".closeAbout");
 
     // Functions
+    /**
+     * Close the about dialog.
+     */
     function closeDialog() {
         dialog.close();
         about.classList.add("hidden");
     }
 
-    // Close dialog when clicking the close button
-    closeBtns.forEach(b => {
+    /**
+     * Main function
+     */
+    function main() {
 
-        // Attach listener.
+        // Attach escape key listener
         document.addEventListener("keydown", e => {
             if (e.key === "Escape") {
                 closeDialog();
             }
         })
-        b.addEventListener("click", closeDialog);
 
-    });
+        // Close dialog when clicking the close button
+        closeBtns.forEach(b => {
+
+            // Attach event listener
+            b.addEventListener("click", closeDialog);
+
+        });
+
+    }
+
+    main();
 
 });
