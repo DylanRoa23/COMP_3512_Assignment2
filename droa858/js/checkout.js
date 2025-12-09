@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // localStorage.clear(); 
 
     // Configurable Variables
+    const CART_KEY = "cart";
+
     const checkoutSection = document.querySelector("#sections");
     const template = document.querySelector("#cart-template");
     const PRODUCT_COLUMNS = 5;
@@ -39,13 +41,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
     /**
+     * Removes a product
+     * @param {Event} e The event.
+     */
+    function removeProduct(e){
+
+        // Configurable variables
+        const REMOVE_AMOUNT = 1; // Shouldn't be changed because user has no reason to group remove.
+
+        // Prevent the default action.
+        e.preventDefault();
+
+        // Get data.
+        const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        const button = e.target;
+        const index = button.dataset.index;
+
+        // Remove from cart.
+        cart.splice(index, REMOVE_AMOUNT);
+
+        // Save changes.
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+
+
+        // Re-render.
+        renderCart();
+
+    }
+    /**
      * Re-renders the cart products, deleting old cart products.
      */
     function renderCart() {
 
         // Configurable variables
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
         const previousProducts = document.querySelectorAll("#sections .cartSection");
+
+        // Internal variables
+        let index = 0;
 
         // Clear the cart.
         previousProducts.forEach(p => {
@@ -78,6 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Clone and insert.
                 const clone = template.content.cloneNode(true);
+
+                // Remove Button
+                const button = clone.querySelector(".cartSection .cartRemoveOne");
+                button.dataset.id = index++;
+                button.addEventListener("click", removeProduct);
 
                 // Product Section
                 clone.querySelector(".cartProductName").textContent = item.title;
