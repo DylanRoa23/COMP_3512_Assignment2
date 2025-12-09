@@ -32,6 +32,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const mainImage = document.querySelector("#sp-main-image");
         const smallImages = document.querySelectorAll("#sp-small-image-container > img");
         const IMAGE_SRC = "images/placeholder_item.png";
+        const title = document.querySelector("#sp-details > h2");
+        const price = document.querySelector("#sp-price");
+        const description = document.querySelector("#sp-desc");
 
         // Get the product id.
         const productId = getProductId();
@@ -62,6 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
         smallImages.forEach(img => {
             img.setAttribute("src", IMAGE_SRC);
         });
+
+        // Set details
+        title.textContent = product.name;
+        price.textContent = "$" + product.price.toFixed(2);
+        description.textContent = product.description;
+        
 
         console.log(product);
     }
