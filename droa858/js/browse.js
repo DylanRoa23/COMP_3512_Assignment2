@@ -124,6 +124,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Clear previous products.
         productContainer.innerHTML = "";
 
+        // If empty,
+        if (items.length === 0) {
+            productContainer.textContent = "No items match the selected filters.";
+        }
+
         // For every item,
         items.forEach(item => {
 
