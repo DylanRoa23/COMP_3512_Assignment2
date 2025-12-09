@@ -3,12 +3,12 @@ import { getClothing } from "./api.js";
 document.addEventListener("DOMContentLoaded", async () => {
 
     // ---------------- Configurable variables ----------------
-    const productContainer = document.querySelector("#product"); 
-    const productTemplate = document.querySelector("#product-template"); 
+    const productContainer = document.querySelector("#product");
+    const productTemplate = document.querySelector("#product-template");
 
     const clothingArray = await getClothing(); // Array of clothing objects
 
-    const CHECKED_CLASSNAME = "checked"; 
+    const CHECKED_CLASSNAME = "checked";
 
     let colorsArray = []; // Stores unique colors
 
@@ -157,40 +157,47 @@ document.addEventListener("DOMContentLoaded", async () => {
      * Main function: sets up filters, attaches events, and renders products.
      */
     function main() {
-        setup(); // Setup filters
 
+        // Setup
+        setup();
+
+        // Configurable variables
         const checkboxFilters = document.querySelectorAll("#filter > .checkbox > div");
         const radioFilters = document.querySelectorAll("#filter > .radio > div");
         const removeFiltersBtns = document.querySelectorAll(".removeFiltersBtn");
+        const cartSize = document.querySelector("#cartSize");
 
+        // Attach event listeners
         checkboxFilters.forEach(f => f.addEventListener("click", activateCheckboxFilter));
         radioFilters.forEach(f => f.addEventListener("click", activateRadioFilter));
         removeFiltersBtns.forEach(b => b.addEventListener("click", removeAllFilters));
 
-        renderProducts(clothingArray); // Initial render
+        // Initial render.
+        renderProducts(clothingArray);
+
+        //Cart System 
+        let cart = JSON.parse(localStorage.getItem("cart")) || []; // Load cart from localStorage
+        cartSize.textContent = cart.length; // Update cart count
+
+        // Event delegation for "Add to Cart" buttons
+        productContainer.addEventListener("click", (e) => {
+            if (e.target.classList.contains("add-cart-btn")) {
+                const productDiv = e.target.closest(".product");
+                const title = productDiv.querySelector(".product-title").textContent;
+                const price = parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", ""));
+
+                // Add to cart array
+                cart.push({ title, price });
+
+                // Save to localStorage
+                localStorage.setItem("cart", JSON.stringify(cart));
+
+                // Update cart counter
+                document.querySelector("#cartSize").textContent = cart.length;
+            }
+        });
+
     }
-
-    //Cart System 
-    let cart = JSON.parse(localStorage.getItem("cart")) || []; // Load cart from localStorage
-    document.querySelector("#cartsize").textContent = cart.length; // Update cart count
-
-    // Event delegation for "Add to Cart" buttons
-    productContainer.addEventListener("click", (e) => {
-        if (e.target.classList.contains("add-cart-btn")) {
-            const productDiv = e.target.closest(".product");
-            const title = productDiv.querySelector(".product-title").textContent;
-            const price = parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", ""));
-            
-            // Add to cart array
-            cart.push({ title, price });
-
-            // Save to localStorage
-            localStorage.setItem("cart", JSON.stringify(cart));
-
-            // Update cart counter
-            document.querySelector("#cartsize").textContent = cart.length;
-        }
-    });
 
     main(); // Initialize page
 });
