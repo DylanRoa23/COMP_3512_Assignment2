@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const home = document.querySelector("#home");
     const browse = document.querySelector("#browse");
     const about = document.querySelector("#about");
+    const cart = document.querySelector("#")
     const aboutDialog = document.querySelector("#about > dialog");
     const navhome = document.querySelector("#navhome");
     const navbrowse = document.querySelector("#navbrowse");
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         home: home,
         browse: browse,
         about: about,
+        cart: cart,
     };
     const NavPages = {
         home: navhome,
