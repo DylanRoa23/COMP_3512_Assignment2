@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      * @param {Event} e The click event.
      */
     function activateRadioFilter(e) {
-        
+
         // Get children.
         const children = e.currentTarget.parentNode.querySelectorAll("div");
 
@@ -89,9 +89,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
 
     }
+    /**
+     * Main function.
+     */
     function main() {
 
-        // ---------------------------- Colors
+        // ---------------------------- Filters
         // Set up.
         populateColorsArray();
         populateColors();
@@ -115,65 +118,67 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         })
 
+        // ------------------------------ Products
+
+        // Generate the products divs
+        const productTemplate = document.querySelector("#product-template");
+
+        function renderProducts(items) {
+            productContainer.innerHTML = ""; // Clear previous products
+            items.forEach(item => {
+                const div = productTemplate.content.cloneNode(true);
+                const img = div.querySelector("img");
+                img.src = "images/placeholder_item.png";
+                img.alt = item.name + ".png";
+                div.querySelector(".product-title").textContent = item.name;
+                div.querySelector(".product-price").textContent = "$" + item.price.toFixed(2);
+                productContainer.appendChild(div);
+            });
+        }
+
+        //Allow's filters to work 
+        function filterProducts() {
+
+            const selectedGenders = Array.from(genderCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.name.toLowerCase());
+
+            const selectedCategories = Array.from(categoryCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.name.toLowerCase());
+
+            const selectedSizes = Array.from(sizeCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.name.toLowerCase());
+
+            const filtered = clothingArray.filter(item => {
+                const genderMatch = selectedGenders.length === 0 || selectedGenders.includes(item.gender.toLowerCase());
+                const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(item.category.toLowerCase());
+                const sizeMatch = selectedSizes.length === 0 || item.sizes.some(s => selectedSizes.includes(s.toLowerCase()));
+                return genderMatch && categoryMatch && sizeMatch;
+            });
+
+            renderProducts(filtered);
+        }
+
+        //Attach listeners 
+        [...genderCheckboxes, ...categoryCheckboxes, ...sizeCheckboxes].forEach(cb => {
+            cb.addEventListener("change", filterProducts);
+        });
+
+        //Removes all filters
+        removeBtn.addEventListener("click", () => {
+            const allCheckboxes = document.querySelectorAll("#filter input[type='checkbox']");
+            allCheckboxes.forEach(cb => cb.checked = false);
+            renderProducts(clothingArray);
+        });
+
+        //Base import when no filter are selected
+        renderProducts(clothingArray);
+
     }
 
     main();
-
-    // Generate the products divs
-    const productTemplate = document.querySelector("#product-template");
-
-    function renderProducts(items) {
-        productContainer.innerHTML = ""; // Clear previous products
-        items.forEach(item => {
-            const div = productTemplate.content.cloneNode(true);
-            const img = div.querySelector("img");
-            img.src = "images/placeholder_item.png";
-            img.alt = item.name + ".png";
-            div.querySelector(".product-title").textContent = item.name;
-            div.querySelector(".product-price").textContent = "$" + item.price.toFixed(2);
-            productContainer.appendChild(div);
-        });
-    }
-
-    //Allow's filters to work 
-    function filterProducts() {
-
-        const selectedGenders = Array.from(genderCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => cb.name.toLowerCase());
-
-        const selectedCategories = Array.from(categoryCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => cb.name.toLowerCase());
-
-        const selectedSizes = Array.from(sizeCheckboxes)
-            .filter(cb => cb.checked)
-            .map(cb => cb.name.toLowerCase());
-
-        const filtered = clothingArray.filter(item => {
-            const genderMatch = selectedGenders.length === 0 || selectedGenders.includes(item.gender.toLowerCase());
-            const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(item.category.toLowerCase());
-            const sizeMatch = selectedSizes.length === 0 || item.sizes.some(s => selectedSizes.includes(s.toLowerCase()));
-            return genderMatch && categoryMatch && sizeMatch;
-        });
-
-        renderProducts(filtered);
-    }
-
-    //Attach listeners 
-    [...genderCheckboxes, ...categoryCheckboxes, ...sizeCheckboxes].forEach(cb => {
-        cb.addEventListener("change", filterProducts);
-    });
-
-    //Removes all filters
-    removeBtn.addEventListener("click", () => {
-        const allCheckboxes = document.querySelectorAll("#filter input[type='checkbox']");
-        allCheckboxes.forEach(cb => cb.checked = false);
-        renderProducts(clothingArray);
-    });
-
-    //Base import when no filter are selected
-    renderProducts(clothingArray);
 
 });
 
