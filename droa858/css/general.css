@@ -51,10 +51,10 @@ nav > div > p {
     padding: 5px 25px;
 }
 
-#navcart > img {
+nav > div > img {
     filter: invert(100%);
 }
-#navcart > p {
+nav > div > p {
     padding: 0;
 }
 
