@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 clone.querySelector("img").src = IMAGE_SRC;
                 clone.querySelector("img").alt = item.title;
 
-                clone.querySelector(".cartColor").textContent = item.color;
+                clone.querySelector(".cartColor > div").style.backgroundColor = item.color;
                 clone.querySelector(".cartSize").textContent = item.size;
                 clone.querySelector(".cartPrice").textContent = "$" + item.price.toFixed(2);
 
