@@ -116,8 +116,14 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     function main() {
 
-        // Initialize
-        cartSize.textContent = JSON.parse(localStorage.getItem(CART_KEY)).length;
+        // Update cart data.
+        const cartData = localStorage.getItem(CART_KEY);
+        if(cartData) {
+            cartSize.textContent = JSON.parse(cartData).length;
+        }
+        else{
+            cartSize.textContent = "0";
+        }
 
         // Listen for buttons.
         homeBtns.forEach(b => {
