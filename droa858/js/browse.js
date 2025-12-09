@@ -13,36 +13,78 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sizeCheckboxes = document.querySelectorAll("#size input[type='checkbox']");
     const colorCheckboxes = document.querySelectorAll("#color input[type='checkbox']"); 
 
-    //Load the clothes
-    const clothing = await getClothing(); // Array of clothing objects
+    const clothingArray = await getClothing(); // Array of clothing objects
+    let colorsArray = [];
 
-    //Load the colors checkboxes
-    const colorURL = "json/colors.json";
-    try {
-        const response = await fetch(colorURL);
-        const colorData = await response.json();
-        const colorHexMap = colorData.hex;
-        const groupedColors = Object.keys(colorHexMap).sort();
+    // --------------- Functions
+    function populateColorsArray() {
 
-        groupedColors.forEach(color => {
-            const div = colorTemplate.content.cloneNode(true);
-            const input = div.querySelector("input");
-            input.id = "color-" + color.toLowerCase();
-            input.name = "color-" + color.toLowerCase();
-            const label = div.querySelector("label");
-            label.setAttribute("for", input.id);
-            const span = div.querySelector(".color-box");
-            span.style.backgroundColor = colorHexMap[color];
-            const text = div.querySelector("#color-text");
-            text.textContent = color;
-            colorsDiv.appendChild(div);
+        // // Get all colors.
+        let c1 = clothingArray.map(clothing => clothing.color[0]);
+
+        // // Get all unique colors.
+        let c2 = [];
+        c1.forEach(color => {
+
+            // If not already in c2,
+            if (!c2.find(c => c.name === color.name)) {
+
+                // Add it.
+                c2.push(color);
+
+            }
+
         });
 
-    } catch (err) {
-        console.error("Error loading colors:", err);
+        // // Sort colors by name
+        colorsArray = c2.sort((a, b) => a.name.localeCompare(b.name));
+
+    }
+    function populateColors() {
+
+        // For every clothing, get unique colors.
+        colorsArray.forEach(c => {
+            
+            // Clone and insert.
+            const div = colorTemplate.content.cloneNode(true);
+            div.querySelector(".color-box").style.backgroundColor = c.hex;
+            div.querySelector(".color-text").textContent = c.name;
+            colorsDiv.appendChild(div);
+
+        })
+
     }
 
-    //Genrate the products divs
+    populateColorsArray();
+    populateColors();
+
+    // // Load the colors checkboxes
+    // const colorURL = "json/colors.json";
+    // try {
+    //     const response = await fetch(colorURL);
+    //     const colorData = await response.json();
+    //     const colorHexMap = colorData.hex;
+    //     const groupedColors = Object.keys(colorHexMap).sort();
+
+    //     groupedColors.forEach(color => {
+    //         const div = colorTemplate.content.cloneNode(true);
+    //         const input = div.querySelector("input");
+    //         input.id = "color-" + color.toLowerCase();
+    //         input.name = "color-" + color.toLowerCase();
+    //         const label = div.querySelector("label");
+    //         label.setAttribute("for", input.id);
+    //         const span = div.querySelector(".color-box");
+    //         span.style.backgroundColor = colorHexMap[color];
+    //         const text = div.querySelector("#color-text");
+    //         text.textContent = color;
+    //         colorsDiv.appendChild(div);
+    //     });
+
+    // } catch (err) {
+    //     console.error("Error loading colors:", err);
+    // }
+
+    // Generate the products divs
     const productTemplate = document.querySelector("#product-template");
 
     function renderProducts(items) {
@@ -73,7 +115,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             .filter(cb => cb.checked)
             .map(cb => cb.name.toLowerCase());
 
-        const filtered = clothing.filter(item => {
+        const filtered = clothingArray.filter(item => {
             const genderMatch = selectedGenders.length === 0 || selectedGenders.includes(item.gender.toLowerCase());
             const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(item.category.toLowerCase());
             const sizeMatch = selectedSizes.length === 0 || item.sizes.some(s => selectedSizes.includes(s.toLowerCase()));
@@ -92,11 +134,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     removeBtn.addEventListener("click", () => {
         const allCheckboxes = document.querySelectorAll("#filter input[type='checkbox']");
         allCheckboxes.forEach(cb => cb.checked = false);
-        renderProducts(clothing);
+        renderProducts(clothingArray);
     });
 
     //Base import when no filter are selected
-    renderProducts(clothing);
+    renderProducts(clothingArray);
 
 });
 
