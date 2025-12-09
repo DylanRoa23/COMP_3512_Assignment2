@@ -238,6 +238,36 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    //Update cart number
+    document.querySelector("#cartsize").textContent = cart.length;
+
+    //Event delegation for Add to Cart buttons
+    productContainer.addEventListener("click", (e) => {
+
+        if (e.target.classList.contains("add-cart-btn")) {
+
+            // Find the product div
+            const productDiv = e.target.closest(".product");
+
+            // Extract product information
+            const title = productDiv.querySelector(".product-title").textContent;
+            const price = parseFloat(
+                productDiv.querySelector(".product-price").textContent.replace("$", "")
+            );
+
+            // Add to cart array
+            cart.push({ title, price });
+
+            // Save to localStorage
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            // Update cart counter
+            document.querySelector("#cartsize").textContent = cart.length;
+        }
+    });
+
     main();
 
 });
