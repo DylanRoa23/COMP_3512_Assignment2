@@ -78,6 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
         description.textContent = product.description;
         material.textContent = "Material: " + product.material;
 
+        // Clear inputs.
+        sizes.innerHTML = "";
+        colors.innerHTML = "";
+
         // Populate inputs.
         product.sizes.forEach(s => {
             const sizeDiv = sizeTemplate.content.cloneNode(true);
