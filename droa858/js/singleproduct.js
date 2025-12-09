@@ -27,12 +27,33 @@ document.addEventListener("DOMContentLoaded", () => {
      */
     async function buildPage() {
 
+        // Configuarable Variables
+        const breadcrumb = document.querySelector("#breadcrumb");
+
         // Get the product id.
         const productId = getProductId();
 
         // Get the product data.
         const clothingArray = await getClothing();
         const product = clothingArray.find(c => c.id === productId);
+
+        // ------------------------ Populate the page
+
+        // Construct breadcrumb.
+        const breadcrumbSep = " > ";
+        const breadcrumbData = [
+            product.gender.charAt(0).toUpperCase() + product.gender.slice(1),
+            product.category,
+            product.name
+        ]
+        let breadcrumbStr = "Home";
+        breadcrumbData.forEach(c => {
+            breadcrumbStr += breadcrumbSep + c;
+        });
+
+        // Set breadcrumb
+        breadcrumb.textContent = breadcrumbStr;
+        
 
         console.log(product);
     }
