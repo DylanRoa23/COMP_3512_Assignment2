@@ -181,7 +181,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Event delegation for "Add to Cart" buttons
         productContainer.addEventListener("click", (e) => {
+
+            // If the target was the add to cart button,
             if (e.target.classList.contains("add-cart-btn")) {
+
+                // Configurable variables
                 const productDiv = e.target.closest(".product");
                 const title = productDiv.querySelector(".product-title").textContent;
                 const price = parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", ""));
