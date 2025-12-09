@@ -206,15 +206,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // Event delegation for Add to Cart buttons
         productContainer.addEventListener("click", (e) => {
+
+            // If an add cart button was clicked,
             if (e.target.classList.contains("add-cart-btn")) {
+
+                // Get data.
                 const productDiv = e.target.closest(".product");
-                const title = productDiv.querySelector(".product-title").textContent;
-                const price = parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", ""));
 
-                // Example: Default size/color
-                const size = "--";
-                const color = "--";
+                // Create cart item.
+                const cartItem = {
+                    id: clothingArray.find(c => c.name === productDiv.querySelector(".product-title").textContent).id,
+                    title: productDiv.querySelector(".product-title").textContent,
+                    price: parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", "")),
+                    quantity: 1,
+                    size: "--",
+                    color: "--",
+                };
 
+                // Add to cart.
                 cart.push({ title, price, size, color });
                 localStorage.setItem("cart", JSON.stringify(cart));
                 cartSize.textContent = cart.length;

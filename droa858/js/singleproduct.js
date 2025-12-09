@@ -196,9 +196,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: product.id,
                 title: product.name,
                 price: product.price,
+                quantity: quantity.value,
                 size: sizes.querySelector(".selected").textContent,
                 color: colors.querySelector(".selected").style.backgroundColor,
-                quantity: quantity.value,
             };
 
             // Add to cart.
