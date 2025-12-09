@@ -198,7 +198,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    /**
+     * Removes all filters and re-renders products.
+     */
     function removeAllFilters() {
+
+        // Configurable variables
+        const allFilters = document.querySelectorAll("#filter > div > div");
+
+        // Uncheck all Filters
+        allFilters.forEach(div => div.classList.remove(CHECKED_CLASSNAME));
+
+        // Re-render products
+        renderProducts(clothingArray);
 
     }
 
@@ -215,7 +227,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Configurable variables.
         const checkboxFilters = document.querySelectorAll("#filter > .checkbox > div");
         const radioFilters = document.querySelectorAll("#filter > .radio > div");
-        const allFilters = document.querySelectorAll("#filter > div > div");
         const removeFiltersBtns = document.querySelectorAll(".removeFiltersBtn");
 
         // For every checkbox filter,
@@ -238,18 +249,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         removeFiltersBtns.forEach(b => {
 
             // Attach event listener.
-            b.addEventListener("click", e => {
-
-                // Cancel default action
-                e.preventDefault();
-
-                // Uncheck all Filters
-                allFilters.forEach(div => div.classList.remove(CHECKED_CLASSNAME));
-
-                // Re-render products
-                renderProducts(clothingArray);
-
-            });
+            b.addEventListener("click", removeAllFilters);
 
         })
 
