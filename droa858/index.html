@@ -192,21 +192,40 @@
         </dialog>
     </article>
 
-    <article id="checkout" class="hidden">
-        <h2>Shopping Cart</h2>
-        <div id="sections">
-            <p class="cartItem">Items</p>
-            <p class="carColor">Color</p>
-            <p class="cartSize">Size</p>
-            <p class="cartPrice">Price</p>
-            <p class="cartQuantity">Quantity</p>
-            <p class="cartSubtotal">Subtotal</p>
+<article id="checkout" class="hidden">
+    <h2>Shopping Cart</h2>
 
-            <template>
-                
-            </template>
-        </div>
-    </article>
+    <div id="sections">
+
+        <p class="cartItem">Items</p>
+        <p class="carColor">Color</p>
+        <p class="cartSize">Size</p>
+        <p class="cartPrice">Price</p>
+        <p class="cartQuantity">Quantity</p>
+        <p class="cartSubtotal">Subtotal</p>
+
+        <template id="cart-template">
+            <div class="cartSection">
+                <button class="cartRemoveOne">—</button>
+                <img src="" alt="product image">
+                <p class="cartProductName"></p>
+            </div>
+            <p class="cartColor"></p>
+            <p class="cartSize"></p>
+            <p class="cartPrice"></p>
+            <p class="cartQuantity"></p>
+            <p class="cartSubtotal"></p>
+        </template>
+
+
+        
+        <p id="shipping">Shipping</p>
+
+        <p id="summary">Summary</p>
+
+    </div>
+</article>
+
 
     <footer>
         <p><a href="https://dylanroa23.github.io/COMP_3512_Assignment2/droa858/index.html">Github Page</a></p>
