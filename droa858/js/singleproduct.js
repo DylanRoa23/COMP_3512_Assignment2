@@ -103,6 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
         description.textContent = product.description;
         material.textContent = "Material: " + product.material;
 
+        // Set quantity listener.
+        quantity.addEventListener("change", e => {
+            if(quantity.value < 1) quantity.value = 1;
+        })
+
         // Clear inputs.
         sizes.innerHTML = "";
         colors.innerHTML = "";
@@ -139,8 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Get selected options.
             const selectedSize = sizes.querySelector(".selected").textContent;
-            const selectedColorDiv = colors.querySelector(".selected");
-            const selectedColor = selectedColorDiv ? selectedColorDiv.style.backgroundColor : null;
+            const selectedColor = colors.querySelector(".selected").style.backgroundColor;
             const selectedQuantity = parseInt(quantity.value) || 1;
 
             // Create cart item.
