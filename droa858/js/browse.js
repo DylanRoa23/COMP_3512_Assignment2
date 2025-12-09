@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const price = parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", ""));
 
                 // Add to cart array
-                cart.push({ title, price });
+                cart.push({ title, price, size, color });
 
                 // Save to localStorage
                 localStorage.setItem("cart", JSON.stringify(cart));
