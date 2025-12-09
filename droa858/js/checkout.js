@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const IMAGE_SRC = "images/placeholder_item.png";
 
     // Functions
-    function main() {
+    function renderCart() {
 
-        // Load cart from localStorage
+        // Configurable variables
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
         // If cart is empty, 
@@ -31,6 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
             // For every cart item,
             cart.forEach(item => {
 
+                // Each item has:
+                //     id: product.id,
+                //     title: product.name,
+                //     price: float,
+                //     quantity: number,
+                //     size: string,
+                //     color: rgb, 
+
                 // Clone and insert.
                 const clone = template.content.cloneNode(true);
 
@@ -39,8 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 clone.querySelector("img").src = IMAGE_SRC;
                 clone.querySelector("img").alt = item.title;
 
-                clone.querySelector(".cartColor").textContent = item.color ?? "--";
-                clone.querySelector(".cartSize").textContent = item.size ?? "--";
+                clone.querySelector(".cartColor").textContent = item.color;
+                clone.querySelector(".cartSize").textContent = item.size;
                 clone.querySelector(".cartPrice").textContent = "$" + item.price.toFixed(2);
 
                 let qty = item.quantity ?? 1;
@@ -53,6 +61,11 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }
+
+    }
+    function main() {
+
+        renderCart();
 
     }
 

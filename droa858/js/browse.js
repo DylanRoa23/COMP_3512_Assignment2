@@ -212,19 +212,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 // Get data.
                 const productDiv = e.target.closest(".product");
+                const product = clothingArray.find(c => c.name === productDiv.querySelector(".product-title").textContent);
 
                 // Create cart item.
                 const cartItem = {
-                    id: clothingArray.find(c => c.name === productDiv.querySelector(".product-title").textContent).id,
+                    id: product.id,
                     title: productDiv.querySelector(".product-title").textContent,
                     price: parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", "")),
                     quantity: 1,
-                    size: "--",
-                    color: "--",
+                    size: product.sizes[0],
+                    color: product.color[0].hex,
                 };
 
                 // Add to cart.
-                cart.push({ title, price, size, color });
+                cart.push(cartItem);
                 localStorage.setItem("cart", JSON.stringify(cart));
                 cartSize.textContent = cart.length;
             }
