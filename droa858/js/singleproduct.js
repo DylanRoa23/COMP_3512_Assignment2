@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Configuarable Variables
         const breadcrumb = document.querySelector("#breadcrumb");
+        const mainImage = document.querySelector("#sp-main-image");
+        const smallImages = document.querySelectorAll(".sp-small-image");
+        const IMAGE_SRC = "images/placeholder_item.png";
 
         // Get the product id.
         const productId = getProductId();
@@ -53,7 +56,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Set breadcrumb
         breadcrumb.textContent = breadcrumbStr;
-        
+
+        // Set image
+        mainImage.setAttribute("src", IMAGE_SRC);
+        smallImages.forEach(img => {
+            img.setAttribute("src", IMAGE_SRC);
+        });
 
         console.log(product);
     }

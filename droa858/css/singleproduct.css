@@ -5,3 +5,15 @@
 #breadcrumb {
     padding: 1rem 0;
 }
+
+#sp-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#sp-main-image {
+    background-color: var(--semantics-bg-color);
+    border: 1px solid var(--image-border-color);
+    color: var(--text-color);
+    border-radius: 8px;
+}

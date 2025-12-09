@@ -38,10 +38,7 @@
             </div>
             <div id="navcheckout" class="checkoutBtn">
                 <!-- Source: https://www.flaticon.com/free-icon/bag_2832495?term=cart&page=1&position=82&origin=tag&related_id=2832495 -->
-                <img 
-                src="https://cdn-icons-png.flaticon.com/512/2832/2832495.png" 
-                height="80%"
-                alt="cart">
+                <img src="https://cdn-icons-png.flaticon.com/512/2832/2832495.png" height="80%" alt="cart">
                 <p>Cart ( <span id="cartSize">0</span> )</p>
             </div>
         </nav>
@@ -143,17 +140,19 @@
 
     <article id="singleproduct" class="hidden">
         <div id="breadcrumb"></div>
-        <div id="singleproduct-container">
-            <div id="singleproduct-image">
-                <img src="" alt="product image">
+        <div id="sp-display">
+            <div>
+                <img id="sp-main-image" src="" title="product" alt="product image" width="100%">
+                <img class="sp-small-image" src="" title="product" alt="product image" width="50%">
+                <img class="sp-small-image" src="" title="product" alt="product image" width="50%">
             </div>
-            <div id="singleproduct-info">
-                <h2 id="singleproduct-title">Product Title</h2>
-                <p id="singleproduct-price">$0.00</p>
-                <p id="singleproduct-description">
+            <div>
+                <h2>Product Title</h2>
+                <p>$0.00</p>
+                <p>
                     Product Description
                 </p>
-                <button id="singleproduct-addcart-btn">Add to cart</button>
+                <button>Add to cart</button>
             </div>
         </div>
     </article>
@@ -205,7 +204,7 @@
                 <p class="cartQuantity"></p>
                 <p class="cartSubtotal"></p>
             </template>
-         
+
             <p id="shipping">Shipping</p>
 
             <p id="summary">Summary</p>
