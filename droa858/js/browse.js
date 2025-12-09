@@ -7,13 +7,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const colorTemplate = document.querySelector("#color-template");
     const productContainer = document.querySelector("#product");
     const removeBtn = document.getElementById("removeBtn");
-
     const genderCheckboxes = document.querySelectorAll("#gender input[type='checkbox']");
     const categoryCheckboxes = document.querySelectorAll("#category input[type='checkbox']");
     const sizeCheckboxes = document.querySelectorAll("#size input[type='checkbox']");
-    const colorCheckboxes = document.querySelectorAll("#color input[type='checkbox']"); 
-
+    const colorCheckboxes = document.querySelectorAll("#color input[type='checkbox']");
     const clothingArray = await getClothing(); // Array of clothing objects
+    const CHECKED_CLASSNAME = "checked";
+
+    // Internal variables
     let colorsArray = [];
 
     // --------------- Functions
@@ -44,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // For every clothing, get unique colors.
         colorsArray.forEach(c => {
-            
+
             // Clone and insert.
             const div = colorTemplate.content.cloneNode(true);
             div.querySelector(".color-box").style.backgroundColor = c.hex;
@@ -55,8 +56,42 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
-    populateColorsArray();
-    populateColors();
+    /**
+     * Applys a checked class to a color filter when clicked.
+     * @param {Event} e The click event.
+     */
+    function activateFilter(e) {
+
+        // Toggle class.
+        e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
+
+    }
+    function main() {
+
+        // ---------------------------- Colors
+        // Set up.
+        populateColorsArray();
+        populateColors();
+
+        // Configurable variables.
+        const colorFilters = document.querySelectorAll("#color .color-option");
+
+        // For every color filter,
+        colorFilters.forEach(cf => {
+
+            // Attach event listener.
+            cf.addEventListener("click", activateFilter);
+
+        })
+
+
+    }
+
+    main();
+
+
+
+
 
     // // Load the colors checkboxes
     // const colorURL = "json/colors.json";
