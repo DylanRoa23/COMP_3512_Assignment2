@@ -8,6 +8,7 @@
     grid-column: 1/2;
     background-color: #131617;
     border: solid 1px;
+    padding: 1rem;
 }
 
 
@@ -25,6 +26,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 8px;
+    padding: 0.5rem 0;
 }
 
 .color-box {
