@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    //This is just there to clear local storage, uncomment and reload to do so
+    // localStorage.clear(); 
+
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
     const checkoutSection = document.querySelector("#sections");
