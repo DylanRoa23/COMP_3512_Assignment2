@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Configuarable Variables
         const breadcrumb = document.querySelector("#breadcrumb");
         const mainImage = document.querySelector("#sp-main-image");
-        const smallImages = document.querySelectorAll(".sp-small-image");
+        const smallImages = document.querySelectorAll("#sp-small-image-container > img");
         const IMAGE_SRC = "images/placeholder_item.png";
 
         // Get the product id.
