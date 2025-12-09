@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const shipping = document.querySelector("#shipping");
     const summary = document.querySelector("#summary");
 
+    const IMAGE_SRC = "images/placeholder_item.png";
+
     // Functions
     function main() {
 
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Product Section
                 clone.querySelector(".cartProductName").textContent = item.title;
-                clone.querySelector("img").src = "images/placeholder_item.png";
+                clone.querySelector("img").src = IMAGE_SRC;
                 clone.querySelector("img").alt = item.title;
 
                 clone.querySelector(".cartColor").textContent = item.color ?? "--";
