@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const img = div.querySelector("img");
             img.src = item.image;
             img.alt = item.title;
-            div.querySelector(".product-title").textContent = item.title;
+            div.querySelector(".product-title").textContent = item.name;
             div.querySelector(".product-price").textContent = "$" + item.price.toFixed(2);
             productContainer.appendChild(div);
         });
