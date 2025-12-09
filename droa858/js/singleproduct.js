@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Configurable Variables
     const page = document.querySelector("#singleproduct");
+    const SELECTED_CLASSNAME = "selected";
 
     // Functions
     /**
@@ -28,9 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
      * @param {string} className The classname of the buttons you want to deselect.
      */
     function select(e, className) {
-
-        // Configurable variables
-        const SELECTED_CLASSNAME = "selected";
 
         // If the target was a sp-size,
         if (e.target.classList.contains(className)) {
@@ -66,6 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const colors = document.querySelector("#sp-colors");
         const colorTemplate = document.querySelector("#sp-color-template");
         const addToCartBtn = document.querySelector("#sp-addToCartBtn");
+
+        // Internal variables
 
         // Get the product id.
         const productId = getProductId();
@@ -108,14 +108,21 @@ document.addEventListener("DOMContentLoaded", () => {
         colors.innerHTML = "";
 
         // Populate inputs.
-        product.sizes.forEach(s => {
+        product.sizes.forEach((s, i) => {
+
+            // Create and append.
             const sizeDiv = sizeTemplate.content.cloneNode(true);
             sizeDiv.querySelector(".sp-size").textContent = s;
+            if(i === 0) sizeDiv.querySelector(".sp-size").classList.add(SELECTED_CLASSNAME);
             sizes.appendChild(sizeDiv);
+
         });
-        product.color.forEach(c => {
+        product.color.forEach((c, i) => {
+
+            // Create and append.
             const colorDiv = colorTemplate.content.cloneNode(true);
             colorDiv.querySelector(".sp-color").style.backgroundColor = c.hex;
+            if(i === 0) colorDiv.querySelector(".sp-color").classList.add(SELECTED_CLASSNAME);
             colors.appendChild(colorDiv);
         });
 
@@ -131,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
             // Get selected options.
-            const selectedSize = sizes.querySelector(".selected")?.textContent || null;
+            const selectedSize = sizes.querySelector(".selected").textContent;
             const selectedColorDiv = colors.querySelector(".selected");
             const selectedColor = selectedColorDiv ? selectedColorDiv.style.backgroundColor : null;
             const selectedQuantity = parseInt(quantity.value) || 1;
@@ -143,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 price: product.price,
                 size: selectedSize,
                 color: selectedColor,
-                quantity: selectedQuantity
+                quantity: selectedQuantity,
             };
 
             // Add to cart.
