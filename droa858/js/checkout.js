@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Configurable Variables
     const CART_KEY = "cart";
+    const BUTTON_INDEX_KEY = "index";
 
     const checkoutSection = document.querySelector("#sections");
     const template = document.querySelector("#cart-template");
@@ -56,8 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Get data.
         const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
         const button = e.target;
-        const index = button.dataset.index;
-
+        const index = button.dataset[BUTTON_INDEX_KEY];
         // Remove from cart.
         cart.splice(index, REMOVE_AMOUNT);
 
@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
             removeWithNext(p, PRODUCT_COLUMNS);
 
         })
-        console.log(cart)
 
         // If cart is empty, 
         if (cart.length === 0) {
@@ -124,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Remove Button
                 const button = clone.querySelector(".cartSection .cartRemoveOne");
-                button.dataset.id = index++;
+                button.dataset[BUTTON_INDEX_KEY] = index++;
                 button.addEventListener("click", removeProduct);
 
                 // Product Section
