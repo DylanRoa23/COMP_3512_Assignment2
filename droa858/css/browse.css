@@ -15,10 +15,10 @@
     text-align: center;
 }
 
-#items{
-    grid-column: 2/4;
-    background-color: #131617;
-    border: solid 1px;
+#filter > div > h3 {
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--dimmed-color);
+    border-bottom: 1px solid var(--faded-color);
 }
 
 @keyframes borderglow {
@@ -32,7 +32,8 @@
         box-shadow: 0 0 5px var(--filter-glow-color) inset;
     }
 }
-.color-option {
+
+#filter > div > div {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
@@ -52,6 +53,12 @@
 .checked {
     background-color: var(--filter-highlight-color);
     animation: borderglow 3s infinite;
+}
+
+#items{
+    grid-column: 2/4;
+    background-color: #131617;
+    border: solid 1px;
 }
 
 #product{

@@ -18,6 +18,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     let colorsArray = [];
 
     // --------------- Functions
+    /**
+     * Populates the colorsArray with unique colors from clothingArray. Sorted by color name.
+     */
     function populateColorsArray() {
 
         // // Get all colors.
@@ -41,6 +44,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         colorsArray = c2.sort((a, b) => a.name.localeCompare(b.name));
 
     }
+    /**
+     * Populates the colors filter section.
+     */
     function populateColors() {
 
         // For every clothing, get unique colors.
@@ -55,12 +61,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
 
     }
-
     /**
-     * Applys a checked class to a color filter when clicked.
+     * Applys a checked class to a checkbox filter when clicked.
      * @param {Event} e The click event.
      */
-    function activateFilter(e) {
+    function activateCheckboxFilter(e) {
+
+        // Toggle class.
+        e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
+
+    }
+    /**
+     * Applys a checked class to radio filter when clicked. Removes checked from siblings.
+     * @param {Event} e The click event.
+     */
+    function activateRadioFilter(e) {
+        
+        // Get children.
+        const children = e.currentTarget.parentNode.querySelectorAll("div");
+
+        // Remove from children.
+        children.forEach(s => {
+            s.classList.remove(CHECKED_CLASSNAME);
+        })
 
         // Toggle class.
         e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
@@ -74,16 +97,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         populateColors();
 
         // Configurable variables.
-        const colorFilters = document.querySelectorAll("#color .color-option");
+        const checkboxFilters = document.querySelectorAll("#filter > .checkbox > div");
+        const radioFilters = document.querySelectorAll("#filter > .radio > div");
 
-        // For every color filter,
-        colorFilters.forEach(cf => {
+        // For every checkbox filter,
+        checkboxFilters.forEach(f => {
 
             // Attach event listener.
-            cf.addEventListener("click", activateFilter);
+            f.addEventListener("click", activateCheckboxFilter);
 
         })
+        // For every radio filter,
+        radioFilters.forEach(f => {
 
+            // Attach event listener.
+            f.addEventListener("click", activateRadioFilter);
+
+        })
 
     }
 
