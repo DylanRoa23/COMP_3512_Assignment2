@@ -5,14 +5,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const dialog = document.querySelector("#about > dialog");
     const closeBtns = document.querySelectorAll(".closeAbout");
 
+    // Functions
+    function closeDialog() {
+        dialog.close();
+        about.classList.add("hidden");
+    }
+
     // Close dialog when clicking the close button
     closeBtns.forEach(b => {
 
         // Attach listener.
-        b.addEventListener("click", e => {
-            dialog.close();
-            about.classList.add("hidden");
+        document.addEventListener("keyup", e => {
+            if (e.key === "Escape") {
+                closeDialog();
+            }
         })
+        b.addEventListener("click", closeDialog);
 
     });
 
