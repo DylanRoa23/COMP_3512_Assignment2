@@ -23,6 +23,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
     /**
+     * Selects one element of a group. Uses event delegation.
+     * @param {Event} e The event that triggered the selection.
+     * @param {string} className The classname of the buttons you want to deselect.
+     */
+    function select(e, className) {
+
+        // Configurable variables
+        const SELECTED_CLASSNAME = "selected";
+
+        // If the target was a sp-size,
+        if (e.target.classList.contains(className)) {
+
+            // Deselect all.
+            e.currentTarget.querySelectorAll(`.${className}`).forEach(s => {
+                s.classList.remove(SELECTED_CLASSNAME);
+            })
+
+            // Select clicked.
+            e.target.classList.add(SELECTED_CLASSNAME);
+
+        }
+
+    }
+    /**
      * Builds the singleproduct page.
      */
     async function buildPage() {
@@ -41,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const sizeTemplate = document.querySelector("#sp-size-template");
         const colors = document.querySelector("#sp-colors");
         const colorTemplate = document.querySelector("#sp-color-template");
+        const addToCartBtn = document.querySelector("#sp-addToCartBtn");
 
         // Get the product id.
         const productId = getProductId();
@@ -94,6 +119,39 @@ document.addEventListener("DOMContentLoaded", () => {
             colors.appendChild(colorDiv);
         });
 
+        // Listen for size selection.
+        sizes.addEventListener("click", e => select(e, "sp-size"));
+        // Listen for color selection.
+        colors.addEventListener("click", e => select(e, "sp-color"));
+
+        // Listen for the button.
+        addToCartBtn.addEventListener("click", () => {
+
+            // Get current cart.
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            // Get selected options.
+            const selectedSize = sizes.querySelector(".selected")?.textContent || null;
+            const selectedColorDiv = colors.querySelector(".selected");
+            const selectedColor = selectedColorDiv ? selectedColorDiv.style.backgroundColor : null;
+            const selectedQuantity = parseInt(quantity.value) || 1;
+
+            // Create cart item.
+            const cartItem = {
+                id: product.id,
+                title: product.name,
+                price: product.price,
+                size: selectedSize,
+                color: selectedColor,
+                quantity: selectedQuantity
+            };
+
+            // Add to cart.
+            cart.push(cartItem);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert("Item added to cart!");
+
+        });
         console.log(product);
     }
     /**

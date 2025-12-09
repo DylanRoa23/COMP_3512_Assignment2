@@ -11,6 +11,7 @@
     --filter-glow-color: #4a5694;
     --image-border-color: #ccc;
     --dark-border-color: black;
+    --selection-border-color: #00e1ff;
 }
 
 body{
