@@ -3,17 +3,14 @@ import { getClothing } from "./api.js";
 document.addEventListener("DOMContentLoaded", async () => {
 
     // ---------------- Configurable variables ----------------
-    const productContainer = document.querySelector("#product"); // Container for all products
-    const productTemplate = document.querySelector("#product-template"); // Template for a single product
+    const productContainer = document.querySelector("#product"); 
+    const productTemplate = document.querySelector("#product-template"); 
 
     const clothingArray = await getClothing(); // Array of clothing objects
 
-    const CHECKED_CLASSNAME = "checked"; // Class to mark selected filters
+    const CHECKED_CLASSNAME = "checked"; 
 
-    // Internal variables
     let colorsArray = []; // Stores unique colors
-
-    // ---------------- Functions ----------------
 
     /**
      * Populates colorsArray with unique colors from clothingArray and sorts alphabetically.
@@ -173,7 +170,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         renderProducts(clothingArray); // Initial render
     }
 
-    // ---------------- Cart System ----------------
+    //Cart System 
     let cart = JSON.parse(localStorage.getItem("cart")) || []; // Load cart from localStorage
     document.querySelector("#cartsize").textContent = cart.length; // Update cart count
 
