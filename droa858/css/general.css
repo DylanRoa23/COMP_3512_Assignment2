@@ -81,3 +81,11 @@ footer {
 .hidden {
   display: none !important;
 }
+
+.dimmed {
+    color: var(--dimmed-color);
+}
+
+.navhighlight {
+    background-color: var(--nav-hover-color);
+}
