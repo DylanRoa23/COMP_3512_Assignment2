@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const navbrowse = document.querySelector("#navbrowse");
     const navabout = document.querySelector("#navabout");
     const navcheckout = document.querySelector("#navcheckout");
+    const cartSize = document.querySelector("#cartSize");
+    const CART_KEY = "cart";
     const homeBtns = document.querySelectorAll(".homeBtn");
     const browseBtns = document.querySelectorAll(".browseBtn");
     const aboutBtns = document.querySelectorAll(".aboutBtn");
@@ -113,6 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
      * Main.
      */
     function main() {
+
+        // Initialize
+        cartSize.textContent = JSON.parse(localStorage.getItem(CART_KEY)).length;
 
         // Listen for buttons.
         homeBtns.forEach(b => {

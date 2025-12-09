@@ -79,9 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // Configurable variables
         const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
         const previousProducts = document.querySelectorAll("#sections .cartSection");
+        const empty = document.querySelector("#c-empty");
 
         // Internal variables
         let index = 0;
+
+        // Display the checkoutSection.
+        checkoutSection.classList.remove("hidden");
+        empty.classList.add("hidden");
 
         // Clear the cart.
         previousProducts.forEach(p => {
@@ -90,12 +95,14 @@ document.addEventListener("DOMContentLoaded", () => {
             removeWithNext(p, PRODUCT_COLUMNS);
 
         })
+        console.log(cart)
 
         // If cart is empty, 
         if (cart.length === 0) {
-
-            // Display message.
-            checkoutSection.textContent = "Your cart is empty.";
+            
+            // Hide checkoutSection.
+            checkoutSection.classList.add("hidden");
+            empty.classList.remove("hidden");
 
         }
         // Otherwise,

@@ -201,11 +201,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         filterAndRender();
 
         // ------------------ Cart System ------------------
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cartSize.textContent = cart.length; // Update cart counter
-
         // Event delegation for Add to Cart buttons
         productContainer.addEventListener("click", (e) => {
+
+            // Initialize
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
             // If an add cart button was clicked,
             if (e.target.classList.contains("add-cart-btn")) {
@@ -224,6 +224,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     color: product.color[0].hex,
                 };
 
+                
                 // Add to cart.
                 cart.push(cartItem);
                 localStorage.setItem("cart", JSON.stringify(cart));
