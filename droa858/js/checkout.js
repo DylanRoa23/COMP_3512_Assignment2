@@ -14,6 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const IMAGE_SRC = "images/placeholder_item.png";
 
     // Functions
+    /**
+     * Removes an element and a given number of its following siblings.
+     * @param {Element} e The starting element to remove.
+     * @param {number} count The number of next siblings to remove.
+     */
     function removeWithNext(e, count) {
 
         // Initialize
@@ -33,12 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
+    /**
+     * Re-renders the cart products, deleting old cart products.
+     */
     function renderCart() {
 
         // Configurable variables
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
         const previousProducts = document.querySelectorAll("#sections .cartSection");
-        
+
         // Clear the cart.
         previousProducts.forEach(p => {
 
