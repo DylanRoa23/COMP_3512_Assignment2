@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Configurable Variables
     const page = document.querySelector("#singleproduct");
     const SELECTED_CLASSNAME = "selected";
+    let product;
 
     // Functions
     /**
@@ -24,17 +25,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
     /**
+     * Validates the quantity inputted.
+     * @param {Event} e The change event of the input element.
+     */
+    function setQuantity(e){
+        if(e.target.value < 1) e.target.value = 1;
+    }
+    /**
      * Selects one element of a group. Uses event delegation.
      * @param {Event} e The event that triggered the selection.
-     * @param {string} className The classname of the buttons you want to deselect.
      */
-    function select(e, className) {
+    function select(e) {
 
-        // If the target was a sp-size,
-        if (e.target.classList.contains(className)) {
+        // Get array of children.
+        const c = Array.from(e.currentTarget.querySelectorAll("div"));
+
+        // If the target was a child,
+        if (c.includes(e.target)) {
 
             // Deselect all.
-            e.currentTarget.querySelectorAll(`.${className}`).forEach(s => {
+            c.forEach(s => {
                 s.classList.remove(SELECTED_CLASSNAME);
             })
 
@@ -63,16 +73,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const sizeTemplate = document.querySelector("#sp-size-template");
         const colors = document.querySelector("#sp-colors");
         const colorTemplate = document.querySelector("#sp-color-template");
-        const addToCartBtn = document.querySelector("#sp-addToCartBtn");
 
-        // Internal variables
+        // ----------------------- Setup
 
         // Get the product id.
         const productId = getProductId();
 
         // Get the product data.
         const clothingArray = await getClothing();
-        const product = clothingArray.find(c => c.id === productId);
+        product = clothingArray.find(c => c.id === productId);
+
+        // ------------------------- Reset
+        quantity.removeEventListener("change", setQuantity);
 
         // ------------------------ Populate the page
 
@@ -104,9 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         material.textContent = "Material: " + product.material;
 
         // Set quantity listener.
-        quantity.addEventListener("change", e => {
-            if(quantity.value < 1) quantity.value = 1;
-        })
+        quantity.addEventListener("change", setQuantity);
 
         // Clear inputs.
         sizes.innerHTML = "";
@@ -129,46 +139,22 @@ document.addEventListener("DOMContentLoaded", () => {
             colorDiv.querySelector(".sp-color").style.backgroundColor = c.hex;
             if(i === 0) colorDiv.querySelector(".sp-color").classList.add(SELECTED_CLASSNAME);
             colors.appendChild(colorDiv);
-        });
-
-        // Listen for size selection.
-        sizes.addEventListener("click", e => select(e, "sp-size"));
-        // Listen for color selection.
-        colors.addEventListener("click", e => select(e, "sp-color"));
-
-        // Listen for the button.
-        addToCartBtn.addEventListener("click", () => {
-
-            // Get current cart.
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-            // Get selected options.
-            const selectedSize = sizes.querySelector(".selected").textContent;
-            const selectedColor = colors.querySelector(".selected").style.backgroundColor;
-            const selectedQuantity = parseInt(quantity.value) || 1;
-
-            // Create cart item.
-            const cartItem = {
-                id: product.id,
-                title: product.name,
-                price: product.price,
-                size: selectedSize,
-                color: selectedColor,
-                quantity: selectedQuantity,
-            };
-
-            // Add to cart.
-            cart.push(cartItem);
-            localStorage.setItem("cart", JSON.stringify(cart));
-            alert("Item added to cart!");
 
         });
-        console.log(product);
+
     }
     /**
      * Main function.
      */
     function main() {
+
+        // Configurable variables
+        const sizes = document.querySelector("#sp-sizes");
+        const colors = document.querySelector("#sp-colors");
+        const quantity = document.querySelector("#sp-quantity");
+        const addToCartBtn = document.querySelector("#sp-addToCartBtn");
+        const CART_KEY = "cart";
+        const cartSize = document.querySelector("#cartSize");
 
         // Observe class changes on the page element. This page only loads when this happens.
         new MutationObserver(mutations => {
@@ -192,6 +178,38 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }).observe(page, { attributes: true });
+
+        // Listen for size selection.
+        sizes.addEventListener("click", select);
+
+        // Listen for color selection.
+        colors.addEventListener("click", select);
+
+        // Listen for the add to cart button.
+        addToCartBtn.addEventListener("click", () => {
+
+            // Get current cart.
+            const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+
+            // Create cart item.
+            const cartItem = {
+                id: product.id,
+                title: product.name,
+                price: product.price,
+                size: sizes.querySelector(".selected").textContent,
+                color: colors.querySelector(".selected").style.backgroundColor,
+                quantity: quantity.value,
+            };
+
+            // Add to cart.
+            cart.push(cartItem);
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            cartSize.textContent = cart.length;
+
+            // Toast.
+            console.log(cartItem);
+
+        });
 
     }
 
