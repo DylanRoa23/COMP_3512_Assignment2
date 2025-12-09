@@ -73,3 +73,14 @@
     width: 300px;
     border: 1px solid #ffffff;
 }
+
+.removeFiltersBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    width: 105px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    background-color: rgb(237, 237, 188);
+}
