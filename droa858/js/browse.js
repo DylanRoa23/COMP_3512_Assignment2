@@ -5,12 +5,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     // ---------------- Configurable variables ----------------
     const productContainer = document.querySelector("#product");
     const productTemplate = document.querySelector("#product-template");
+    const cartSize = document.querySelector("#cartSize");
+    const sortSelect = document.querySelector("#sort");
 
     const clothingArray = await getClothing(); // Array of clothing objects
-
     const CHECKED_CLASSNAME = "checked";
 
+    // Internal variables
     let colorsArray = []; // Stores unique colors
+
+    // --------------- Functions ----------------------------
 
     /**
      * Populates colorsArray with unique colors from clothingArray and sorts alphabetically.
@@ -22,9 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Keep only unique colors
         const c2 = [];
         c1.forEach(color => {
-            if (!c2.find(c => c.name === color.name)) {
-                c2.push(color);
-            }
+            if (!c2.find(c => c.name === color.name)) c2.push(color);
         });
 
         // Sort by color name
@@ -38,8 +40,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const colorsDiv = document.querySelector("#color"); // Container for color filters
         const colorTemplate = document.querySelector("#color-template"); // Template for a single color filter
 
+        // For every unique color, clone template and insert into DOM
         colorsArray.forEach(c => {
-            const div = colorTemplate.content.cloneNode(true); // Clone template
+            const div = colorTemplate.content.cloneNode(true);
             div.querySelector(".color-box").style.backgroundColor = c.hex; // Set color box
             div.querySelector(".color-text").textContent = c.name; // Set color name
             colorsDiv.appendChild(div); // Add to DOM
@@ -47,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     /**
-     * Sets up initial variables and renders filter sections.
+     * Sets up initial filters and variables.
      */
     function setup() {
         populateColorsArray(); // Prepare colors array
@@ -61,29 +64,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     function renderProducts(items) {
         productContainer.innerHTML = ""; // Clear previous products
 
+        // If no items match, show message
         if (items.length === 0) {
-            productContainer.textContent = "No items match the selected filters."; // Show message if empty
+            productContainer.textContent = "No items match the selected filters.";
             return;
         }
 
+        // For every item, clone template and populate product info
         items.forEach(item => {
-
-            // Clone and insert.
             const div = productTemplate.content.cloneNode(true);
-            div.querySelector(".product").dataset.id = item.id;
+            const productDiv = div.querySelector(".product");
+            productDiv.dataset.id = item.id; // Set product ID for reference
             const img = div.querySelector("img");
-            img.src = "images/placeholder_item.png";
-            img.alt = item.name + ".png";
+            img.src = "images/placeholder_item.png"; // Default placeholder image
+            img.alt = item.name + ".png";           // Alt text
             div.querySelector(".product-title").textContent = item.name;
             div.querySelector(".product-price").textContent = "$" + item.price.toFixed(2);
-            productContainer.appendChild(div); // Add product to DOM
+            productContainer.appendChild(div); // Insert product into DOM
         });
     }
 
     /**
-     * Filters products based on selected filters and renders them.
+     * Returns an array of products filtered by currently selected filters.
      */
-    function filterProducts() {
+    function getFilteredArray() {
         const genderCheckboxes = document.querySelectorAll("#gender div");
         const categoryCheckboxes = document.querySelectorAll("#category div");
         const sizeCheckboxes = document.querySelectorAll("#size div");
@@ -97,7 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             { name: "Extra Large", abbr: "XL" },
         ];
 
-        // Get selected filters
+        // Get selected filter values
         const selectedGenders = Array.from(genderCheckboxes)
             .filter(div => div.classList.contains(CHECKED_CLASSNAME))
             .map(div => div.textContent.toLowerCase());
@@ -114,16 +118,37 @@ document.addEventListener("DOMContentLoaded", async () => {
             .filter(div => div.classList.contains(CHECKED_CLASSNAME))
             .map(div => div.querySelector(".color-text").textContent.toLowerCase());
 
-        // Filter products
-        const filtered = clothingArray.filter(item => {
+        // Filter clothingArray based on selected filters
+        return clothingArray.filter(item => {
             const genderMatch = selectedGenders.length === 0 || selectedGenders.includes(item.gender.toLowerCase());
             const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(item.category.toLowerCase());
             const sizeMatch = selectedSizes.length === 0 || item.sizes.some(s => selectedSizes.includes(s));
             const colorMatch = selectedColors.length === 0 || selectedColors.includes(item.color[0].name.toLowerCase());
             return genderMatch && categoryMatch && sizeMatch && colorMatch;
         });
+    }
 
-        renderProducts(filtered); // Render filtered products
+    /**
+     * Sorts an array based on the selected sort option.
+     * @param {Array} arr Array of clothing objects to sort
+     * @returns {Array} Sorted array
+     */
+    function sortArray(arr) {
+        const value = sortSelect.value;
+        return arr.sort((a, b) => {
+            if (value === "name") return a.name.localeCompare(b.name);
+            if (value === "price") return a.price - b.price;
+            if (value.toLowerCase() === "category") return a.category.localeCompare(b.category);
+        });
+    }
+
+    /**
+     * Combines filtering and sorting, then renders products.
+     */
+    function filterAndRender() {
+        const filtered = getFilteredArray();
+        const sorted = sortArray(filtered);
+        renderProducts(sorted);
     }
 
     /**
@@ -131,76 +156,70 @@ document.addEventListener("DOMContentLoaded", async () => {
      */
     function activateCheckboxFilter(e) {
         e.currentTarget.classList.toggle(CHECKED_CLASSNAME); // Toggle selection
-        filterProducts(); // Update products
+        filterAndRender(); // Re-filter and render
     }
 
     /**
-     * Handles clicks on radio filters (only one can be active per group).
+     * Handles clicks on radio filters (only one active per group).
      */
     function activateRadioFilter(e) {
         const children = e.currentTarget.parentNode.querySelectorAll("div");
-        children.forEach(s => s.classList.remove(CHECKED_CLASSNAME)); // Remove selection from siblings
-        e.currentTarget.classList.toggle(CHECKED_CLASSNAME); // Toggle current
-        filterProducts(); // Update products
+        children.forEach(s => s.classList.remove(CHECKED_CLASSNAME)); // Remove active from siblings
+        e.currentTarget.classList.toggle(CHECKED_CLASSNAME); // Activate clicked
+        filterAndRender(); // Re-filter and render
     }
 
     /**
-     * Removes all filters and shows all products.
+     * Removes all filters and re-renders products.
      */
     function removeAllFilters() {
         const allFilters = document.querySelectorAll("#filter > div > div");
         allFilters.forEach(div => div.classList.remove(CHECKED_CLASSNAME));
-        renderProducts(clothingArray);
+        filterAndRender();
     }
 
     /**
-     * Main function: sets up filters, attaches events, and renders products.
+     * Main function: initializes filters, sorting, cart, and renders products.
      */
     function main() {
+        setup(); // Prepare filters
 
-        // Setup
-        setup();
-
-        // Configurable variables
+        // Get filter elements
         const checkboxFilters = document.querySelectorAll("#filter > .checkbox > div");
         const radioFilters = document.querySelectorAll("#filter > .radio > div");
         const removeFiltersBtns = document.querySelectorAll(".removeFiltersBtn");
-        const cartSize = document.querySelector("#cartSize");
 
         // Attach event listeners
         checkboxFilters.forEach(f => f.addEventListener("click", activateCheckboxFilter));
         radioFilters.forEach(f => f.addEventListener("click", activateRadioFilter));
         removeFiltersBtns.forEach(b => b.addEventListener("click", removeAllFilters));
 
-        // Initial render.
-        renderProducts(clothingArray);
+        // Sorting event listener
+        sortSelect.addEventListener("change", filterAndRender);
 
-        //Cart System 
-        let cart = JSON.parse(localStorage.getItem("cart")) || []; // Load cart from localStorage
-        cartSize.textContent = cart.length; // Update cart count
+        // Initial render
+        filterAndRender();
 
-        // Event delegation for "Add to Cart" buttons
+        // ------------------ Cart System ------------------
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cartSize.textContent = cart.length; // Update cart counter
+
+        // Event delegation for Add to Cart buttons
         productContainer.addEventListener("click", (e) => {
-
-            // If the target was the add to cart button,
             if (e.target.classList.contains("add-cart-btn")) {
-
-                // Configurable variables
                 const productDiv = e.target.closest(".product");
                 const title = productDiv.querySelector(".product-title").textContent;
                 const price = parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", ""));
 
-                // Add to cart array
+                // Example: Default size/color
+                const size = "--";
+                const color = "--";
+
                 cart.push({ title, price, size, color });
-
-                // Save to localStorage
                 localStorage.setItem("cart", JSON.stringify(cart));
-
-                // Update cart counter
-                document.querySelector("#cartSize").textContent = cart.length;
+                cartSize.textContent = cart.length;
             }
         });
-
     }
 
     main(); // Initialize page
