@@ -119,36 +119,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     main();
 
-
-
-
-
-    // // Load the colors checkboxes
-    // const colorURL = "json/colors.json";
-    // try {
-    //     const response = await fetch(colorURL);
-    //     const colorData = await response.json();
-    //     const colorHexMap = colorData.hex;
-    //     const groupedColors = Object.keys(colorHexMap).sort();
-
-    //     groupedColors.forEach(color => {
-    //         const div = colorTemplate.content.cloneNode(true);
-    //         const input = div.querySelector("input");
-    //         input.id = "color-" + color.toLowerCase();
-    //         input.name = "color-" + color.toLowerCase();
-    //         const label = div.querySelector("label");
-    //         label.setAttribute("for", input.id);
-    //         const span = div.querySelector(".color-box");
-    //         span.style.backgroundColor = colorHexMap[color];
-    //         const text = div.querySelector("#color-text");
-    //         text.textContent = color;
-    //         colorsDiv.appendChild(div);
-    //     });
-
-    // } catch (err) {
-    //     console.error("Error loading colors:", err);
-    // }
-
     // Generate the products divs
     const productTemplate = document.querySelector("#product-template");
 
