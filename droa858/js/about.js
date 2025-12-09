@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     closeBtns.forEach(b => {
 
         // Attach listener.
-        document.addEventListener("keyup", e => {
+        document.addEventListener("keydown", e => {
             if (e.key === "Escape") {
                 closeDialog();
             }
