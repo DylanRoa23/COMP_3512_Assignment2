@@ -32,13 +32,13 @@
     height: 1.5rem;
 }
 
-#sp-sizes {
+#sp-sizes, #sp-colors {
     display: flex;
     gap: 1rem;
     margin: 0 0 1.5rem 0;
 }
 
-.sp-size {
+.sp-size, .sp-color {
     border: 1px solid var(--nav-hover-color);
     background-color: var(--text-color);
     color: var(--dimmed-color);
@@ -48,11 +48,4 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-}
-
-.sp-color {
-    border: 1px solid var(--nav-hover-color);
-    background-color: var(--text-color);
-    height: 3rem;
-    width: 3rem;
 }
