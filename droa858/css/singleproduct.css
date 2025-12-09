@@ -11,9 +11,15 @@
     grid-template-columns: 1fr 1fr;
 }
 
-#sp-main-image {
+#sp-main-image, #sp-small-image-container > img {
     background-color: var(--semantics-bg-color);
     border: 1px solid var(--image-border-color);
     color: var(--text-color);
     border-radius: 8px;
+}
+
+#sp-small-image-container {
+    display: flex;
+    padding: 1rem 0;
+    gap: 1rem;
 }
