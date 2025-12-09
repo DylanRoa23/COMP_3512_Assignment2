@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // ---------------- Configurable variables
     const productContainer = document.querySelector("#product");
     const productTemplate = document.querySelector("#product-template");
-    const removeBtn = document.getElementById("removeBtn");
 
     const clothingArray = await getClothing(); // Array of clothing objects
 
@@ -79,43 +78,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     /**
-     * Applys a checked class to a checkbox filter when clicked.
-     * @param {Event} e The click event.
-     */
-    function activateCheckboxFilter(e) {
-
-        // Toggle class.
-        e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
-
-        // Filter.
-        filterProducts();
-
-    }
-
-
-    /**
-     * Applys a checked class to radio filter when clicked. Removes checked from siblings.
-     * @param {Event} e The click event.
-     */
-    function activateRadioFilter(e) {
-
-        // Get children.
-        const children = e.currentTarget.parentNode.querySelectorAll("div");
-
-        // Remove from children.
-        children.forEach(s => {
-            s.classList.remove(CHECKED_CLASSNAME);
-        })
-
-        // Toggle class.
-        e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
-
-        // Filter.
-        filterProducts();
-
-    }
-
-    /**
      * Generates the products divs based on the given items.
      * @param {Array<ClothingObject>} items Array of clothing objects to render.
      */
@@ -180,6 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             .filter(div => div.classList.contains(CHECKED_CLASSNAME))
             .map(div => div.querySelector(".color-text").textContent.toLowerCase());
 
+        // Filter clothingArray based on selected filters.
         const filtered = clothingArray.filter(item => {
 
             // Check matches for each filter type.
@@ -197,6 +160,49 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
 
+
+    /**
+     * Applys a checked class to a checkbox filter when clicked.
+     * @param {Event} e The click event.
+     */
+    function activateCheckboxFilter(e) {
+
+        // Toggle class.
+        e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
+
+        // Filter.
+        filterProducts();
+
+    }
+
+
+    /**
+     * Applys a checked class to radio filter when clicked. Removes checked from siblings.
+     * @param {Event} e The click event.
+     */
+    function activateRadioFilter(e) {
+
+        // Get children.
+        const children = e.currentTarget.parentNode.querySelectorAll("div");
+
+        // Remove from children.
+        children.forEach(s => {
+            s.classList.remove(CHECKED_CLASSNAME);
+        })
+
+        // Toggle class.
+        e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
+
+        // Filter.
+        filterProducts();
+
+    }
+
+    function removeAllFilters() {
+
+    }
+
+
     /**
      * Main function.
      */
@@ -209,6 +215,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Configurable variables.
         const checkboxFilters = document.querySelectorAll("#filter > .checkbox > div");
         const radioFilters = document.querySelectorAll("#filter > .radio > div");
+        const allFilters = document.querySelectorAll("#filter > div > div");
+        const removeFiltersBtns = document.querySelectorAll(".removeFiltersBtn");
 
         // For every checkbox filter,
         checkboxFilters.forEach(f => {
@@ -226,14 +234,26 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
 
         // ------------------------------ Products
-        //Removes all filters
-        removeBtn.addEventListener("click", () => {
-            const allCheckboxes = document.querySelectorAll("#filter input[type='checkbox']");
-            allCheckboxes.forEach(cb => cb.checked = false);
-            renderProducts(clothingArray);
-        });
+        // For every remove filters button
+        removeFiltersBtns.forEach(b => {
 
-        //Base import when no filter are selected
+            // Attach event listener.
+            b.addEventListener("click", e => {
+
+                // Cancel default action
+                e.preventDefault();
+
+                // Uncheck all Filters
+                allFilters.forEach(div => div.classList.remove(CHECKED_CLASSNAME));
+
+                // Re-render products
+                renderProducts(clothingArray);
+
+            });
+
+        })
+
+        // Render everything initially, when no filters are selected
         renderProducts(clothingArray);
 
     }
