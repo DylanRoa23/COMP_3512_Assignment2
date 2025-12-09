@@ -4,26 +4,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const home = document.querySelector("#home");
     const browse = document.querySelector("#browse");
     const about = document.querySelector("#about");
-    const cart = document.querySelector("#")
+    const checkout = document.querySelector("#checkout")
     const aboutDialog = document.querySelector("#about > dialog");
     const navhome = document.querySelector("#navhome");
     const navbrowse = document.querySelector("#navbrowse");
     const navabout = document.querySelector("#navabout");
+    const navcheckout = document.querySelector("#navcheckout");
     const homeBtns = document.querySelectorAll(".homeBtn");
     const browseBtns = document.querySelectorAll(".browseBtn");
     const aboutBtns = document.querySelectorAll(".aboutBtn");
+    const checkoutBtns = document.querySelectorAll(".checkoutBtn");
 
     // Internal Variables
     const Pages = {
         home: home,
         browse: browse,
         about: about,
-        cart: cart,
+        checkout: checkout,
     };
     const NavPages = {
         home: navhome,
         browse: navbrowse,
         about: navabout,
+        checkout: navcheckout,
     }
 
     // Functions
@@ -128,6 +131,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 about.classList.remove("hidden");
                 aboutDialog.showModal();
             });
+
+        })
+        checkoutBtns.forEach(b => {
+
+            // Attach listener.
+            b.addEventListener("click", e => { displayPage(e, checkout, navcheckout) });
 
         })
 
