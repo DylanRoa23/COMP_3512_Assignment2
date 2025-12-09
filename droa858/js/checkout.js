@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Configurable variables
         const REMOVE_AMOUNT = 1; // Shouldn't be changed because user has no reason to group remove.
+        const cartSize = document.querySelector("#cartSize");
 
         // Prevent the default action.
         e.preventDefault();
@@ -63,6 +64,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Save changes.
         localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
+        // Update cartSize
+        cartSize.textContent = cart.length;
 
         // Re-render.
         renderCart();
