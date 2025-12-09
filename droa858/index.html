@@ -125,7 +125,7 @@
                 </span>
             </button>
             <!-- this can be erased once website is finalized, it's just to see how we want to do it and then use the template item -->
-            <div id="product">
+            <div id="product" class="singleproductBtnContainer">
                 <!-- <div class="product">
                     <img src="" alt="test">
                     <p>Title</p>
@@ -153,8 +153,8 @@
 
                 <template id="product-template">
                     <div class="product">
-                        <img src="" alt="product image">
-                        <p class="product-title">Title</p>
+                        <img src="" alt="product image" class="singleproductBtn">
+                        <p class="product-title singleproductBtn">Title</p>
                         <p class="product-price">$Price</p>
                         <button class="add-cart-btn">Add to cart</button>
                     </div>
@@ -165,7 +165,19 @@
     </article>
 
     <article id="singleproduct" class="hidden">
-
+        <div id="singleproduct-container">
+            <div id="singleproduct-image">
+                <img src="" alt="product image">
+            </div>
+            <div id="singleproduct-info">
+                <h2 id="singleproduct-title">Product Title</h2>
+                <p id="singleproduct-price">$0.00</p>
+                <p id="singleproduct-description">
+                    Product Description
+                </p>
+                <button id="singleproduct-addcart-btn">Add to cart</button>
+            </div>
+        </div>
     </article>
 
     <article id="about" class="hidden">

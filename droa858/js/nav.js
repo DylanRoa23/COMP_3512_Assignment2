@@ -4,8 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const home = document.querySelector("#home");
     const browse = document.querySelector("#browse");
     const about = document.querySelector("#about");
-    const checkout = document.querySelector("#checkout")
     const aboutDialog = document.querySelector("#about > dialog");
+    const checkout = document.querySelector("#checkout");
+    const singleproduct = document.querySelector("#singleproduct");
     const navhome = document.querySelector("#navhome");
     const navbrowse = document.querySelector("#navbrowse");
     const navabout = document.querySelector("#navabout");
@@ -14,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const browseBtns = document.querySelectorAll(".browseBtn");
     const aboutBtns = document.querySelectorAll(".aboutBtn");
     const checkoutBtns = document.querySelectorAll(".checkoutBtn");
+    const singleproductBtnContainers = document.querySelectorAll(".singleproductBtnContainer");
+    const singleproductBtns = document.querySelectorAll(".singleproductBtn");
 
     // Internal Variables
     const Pages = {
@@ -21,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         browse: browse,
         about: about,
         checkout: checkout,
+        singleproduct: singleproduct,
     };
     const NavPages = {
         home: navhome,
@@ -137,6 +141,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Attach listener.
             b.addEventListener("click", e => { displayPage(e, checkout, navcheckout) });
+
+        })
+        singleproductBtns.forEach(b => {
+
+            // Attach listener.
+            b.addEventListener("click", e => { displayPage(e, singleproduct, navbrowse) });
+
+        })
+        singleproductBtnContainers.forEach(c => {
+
+            // Attach listener.
+            c.addEventListener("click", e => {
+
+                // Stop propagation.
+                e.stopPropagation();
+
+                // If the target has the class,
+                if (e.target.classList.contains("singleproductBtn")) {
+
+                    // Display singleproduct page.
+                    displayPage(e, singleproduct, navbrowse);
+
+                }
+
+            });
 
         })
 
