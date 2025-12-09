@@ -8,7 +8,6 @@
     grid-column: 1/2;
     background-color: #131617;
     border: solid 1px;
-    padding: 1rem;
 }
 
 
@@ -22,11 +21,24 @@
     border: solid 1px;
 }
 
+@keyframes borderglow {
+    0% {
+        box-shadow: 0 0 5px var(--filter-glow-color) inset;
+    }
+    50% {
+        box-shadow: 0 0 20px var(--filter-glow-color) inset;
+    }
+    100% {
+        box-shadow: 0 0 5px var(--filter-glow-color) inset;
+    }
+}
 .color-option {
     display: flex;
     align-items: center;
     margin-bottom: 8px;
-    padding: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 .color-box {
@@ -35,6 +47,11 @@
     display: inline-block;
     margin-right: 5px;
     border: 1px solid #ffffff;
+}
+
+.checked {
+    background-color: var(--filter-highlight-color);
+    animation: borderglow 3s infinite;
 }
 
 #product{
