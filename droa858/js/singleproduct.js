@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
      * Validates the quantity inputted.
      * @param {Event} e The change event of the input element.
      */
-    function setQuantity(e){
-        if(e.target.value < 1) e.target.value = 1;
+    function setQuantity(e) {
+        if (e.target.value < 1) e.target.value = 1;
     }
     /**
      * Selects one element of a group. Uses event delegation.
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Create and append.
             const sizeDiv = sizeTemplate.content.cloneNode(true);
             sizeDiv.querySelector(".sp-size").textContent = s;
-            if(i === 0) sizeDiv.querySelector(".sp-size").classList.add(SELECTED_CLASSNAME);
+            if (i === 0) sizeDiv.querySelector(".sp-size").classList.add(SELECTED_CLASSNAME);
             sizes.appendChild(sizeDiv);
 
         });
@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Create and append.
             const colorDiv = colorTemplate.content.cloneNode(true);
             colorDiv.querySelector(".sp-color").style.backgroundColor = c.hex;
-            if(i === 0) colorDiv.querySelector(".sp-color").classList.add(SELECTED_CLASSNAME);
+            if (i === 0) colorDiv.querySelector(".sp-color").classList.add(SELECTED_CLASSNAME);
             colors.appendChild(colorDiv);
 
         });
@@ -155,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const addToCartBtn = document.querySelector("#sp-addToCartBtn");
         const CART_KEY = "cart";
         const cartSize = document.querySelector("#cartSize");
+        const TOAST_TIME = 3000; // in ms
 
         // Observe class changes on the page element. This page only loads when this happens.
         new MutationObserver(mutations => {
@@ -207,7 +208,19 @@ document.addEventListener("DOMContentLoaded", () => {
             cartSize.textContent = cart.length;
 
             // Toast.
-            console.log(cartItem);
+            function showToast() {
+                
+                // Configurable variables
+                const toast = document.querySelector("#toast");
+                toast.textContent = "'" + product.name + "' added to cart!";
+                toast.classList.add("show");
+
+                // Timeout toast
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                }, TOAST_TIME);
+            }
+            showToast()
 
         });
 
