@@ -3,7 +3,6 @@ import { getClothing } from "./api.js";
 document.addEventListener("DOMContentLoaded", () => {
 
     // Configurable Variables
-    const page = document.querySelector("#singleproduct");
     const SELECTED_CLASSNAME = "selected";
     let product;
 
@@ -149,6 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function main() {
 
         // Configurable variables
+        const page = document.querySelector("#singleproduct");
         const sizes = document.querySelector("#sp-sizes");
         const colors = document.querySelector("#sp-colors");
         const quantity = document.querySelector("#sp-quantity");
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             });
 
-        }).observe(page, { attributes: true });
+        }).observe(page, { attributes: true }); // Observe changes including class changes
 
         // Listen for size selection.
         sizes.addEventListener("click", select);

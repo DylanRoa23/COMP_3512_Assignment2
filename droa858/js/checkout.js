@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Configurable Variables
     const checkoutSection = document.querySelector("#sections");
     const template = document.querySelector("#cart-template");
+    const PRODUCT_COLUMNS = 5;
 
     const shipping = document.querySelector("#shipping");
     const summary = document.querySelector("#summary");
@@ -13,10 +14,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const IMAGE_SRC = "images/placeholder_item.png";
 
     // Functions
+    function removeWithNext(e, count) {
+
+        // Initialize
+        let current = e;
+
+        // For every next column,
+        for (let i = 0; i <= count; i++) {
+
+            // Advance
+            let next = current.nextElementSibling;
+
+            // Remove
+            current.remove();
+
+            // Advance
+            current = next;
+        }
+
+    }
     function renderCart() {
 
         // Configurable variables
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const previousProducts = document.querySelectorAll("#sections .cartSection");
+        
+        // Clear the cart.
+        previousProducts.forEach(p => {
+
+            // Remove it and its columns.
+            removeWithNext(p, PRODUCT_COLUMNS);
+
+        })
 
         // If cart is empty, 
         if (cart.length === 0) {
@@ -65,7 +94,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     function main() {
 
-        renderCart();
+        // Configurable variables
+        const page = document.querySelector("#checkout");
+
+        // Observe class changes on the page element. This page only loads when this happens.
+        new MutationObserver(mutations => {
+
+            // For every mutation,
+            mutations.forEach(mutation => {
+
+                // If the mutation was displaying the page,
+                if (mutation.attributeName === "class" && mutation.target === page && !page.classList.contains('hidden')) {
+
+                    // Render the cart.
+                    renderCart();
+
+                }
+
+            });
+
+        }).observe(page, { attributes: true }); // Observe changes including class changes
 
     }
 
