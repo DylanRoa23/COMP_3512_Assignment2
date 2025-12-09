@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const browseBtns = document.querySelectorAll(".browseBtn");
     const aboutBtns = document.querySelectorAll(".aboutBtn");
 
-    // System Variables
+    // Internal Variables
     const Pages = {
         home: home,
         browse: browse,
