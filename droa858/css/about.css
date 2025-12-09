@@ -5,4 +5,12 @@
     height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    font-size: 20px;
+}
+
+.closeAbout{
+    border-radius: 3px;
+    height: 40px;
+    width: 70px;
+    font-size: 20px
 }
