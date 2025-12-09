@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             // Clone and insert.
             const div = productTemplate.content.cloneNode(true);
+            div.querySelector(".product").dataset.id = item.id;
             const img = div.querySelector("img");
             img.src = "images/placeholder_item.png";
             img.alt = item.name + ".png";
