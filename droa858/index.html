@@ -152,10 +152,25 @@
             <div id="sp-details">
                 <h2>Product Title</h2>
                 <p id="sp-price">$0.00</p>
-                <p id="sp-desc">
-                    Product Description
-                </p>
-                <button>Add to cart</button>
+                <p id="sp-desc">Product Description</p>
+                <p id="sp-mat">Product Material</p>
+                <label>
+                    <p>
+                        Quantity:
+                        <input type="number" id="sp-quantity" name="quantity" min="1" value="1">
+                    </p>
+                </label>
+                <div id="sp-sizes">
+                    <template id="sp-size-template">
+                        <div class="sp-size"></div>
+                    </template>
+                </div>
+                <div id="sp-colors">
+                    <template id="sp-color-template">
+                        <div class="sp-color"></div>
+                    </template>
+                </div>
+                <button id="sp-addToCartBtn">Add to cart</button>
             </div>
         </div>
     </article>

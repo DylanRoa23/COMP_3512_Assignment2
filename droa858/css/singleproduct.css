@@ -27,3 +27,23 @@
 #sp-details {
     padding: 0 2rem;
 }
+
+#sp-quantity {
+    height: 1.5rem;
+}
+
+#sp-sizes {
+    display: flex;
+    gap: 1rem;
+}
+
+.sp-size {
+    border: 1px solid var(--nav-hover-color);
+    background-color: var(--text-color);
+    color: var(--dimmed-color);
+    height: 2.5rem;
+    width: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

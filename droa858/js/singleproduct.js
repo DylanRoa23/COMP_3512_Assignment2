@@ -35,6 +35,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const title = document.querySelector("#sp-details > h2");
         const price = document.querySelector("#sp-price");
         const description = document.querySelector("#sp-desc");
+        const material = document.querySelector("#sp-mat");
+        const quantity = document.querySelector("#sp-quantity");
+        const sizes = document.querySelector("#sp-sizes");
+        const sizeTemplate = document.querySelector("#sp-size-template");
+        const colors = document.querySelector("#sp-colors");
+        const colorTemplate = document.querySelector("#sp-color-template");
 
         // Get the product id.
         const productId = getProductId();
@@ -70,7 +76,19 @@ document.addEventListener("DOMContentLoaded", () => {
         title.textContent = product.name;
         price.textContent = "$" + product.price.toFixed(2);
         description.textContent = product.description;
-        
+        material.textContent = "Material: " + product.material;
+
+        // Populate inputs.
+        product.sizes.forEach(s => {
+            const sizeDiv = sizeTemplate.content.cloneNode(true);
+            sizeDiv.querySelector(".sp-size").textContent = s;
+            sizes.appendChild(sizeDiv);
+        });
+        product.color.forEach(c => {
+            const colorDiv = colorTemplate.content.cloneNode(true);
+            colorDiv.querySelector(".sp-color").style.backgroundColor = c.hex;
+            colors.appendChild(colorDiv);
+        });
 
         console.log(product);
     }

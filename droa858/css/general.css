@@ -10,6 +10,7 @@
     --filter-highlight-color: #2c3357;
     --filter-glow-color: #4a5694;
     --image-border-color: #ccc;
+    --dark-border-color: black;
 }
 
 body{
