@@ -70,7 +70,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         items.forEach(item => {
-            const div = productTemplate.content.cloneNode(true); // Clone template
+
+            // Clone and insert.
+            const div = productTemplate.content.cloneNode(true);
             div.querySelector(".product").dataset.id = item.id;
             const img = div.querySelector("img");
             img.src = "images/placeholder_item.png";

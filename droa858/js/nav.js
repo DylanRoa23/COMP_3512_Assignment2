@@ -159,6 +159,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // If the target has the class,
                 if (e.target.classList.contains("singleproductBtn")) {
+                    
+                    // Fetch the product data and save it to localStorage.
+                    const id = e.target.parentNode.dataset.id;
+                    localStorage.setItem("singleproductId", id);
 
                     // Display singleproduct page.
                     displayPage(e, singleproduct, navbrowse);
