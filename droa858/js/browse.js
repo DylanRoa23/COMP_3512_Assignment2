@@ -3,15 +3,12 @@ import { getClothing } from "./api.js";
 document.addEventListener("DOMContentLoaded", async () => {
 
     // ---------------- Configurable variables
-    const colorsDiv = document.querySelector("#color");
-    const colorTemplate = document.querySelector("#color-template");
     const productContainer = document.querySelector("#product");
+    const productTemplate = document.querySelector("#product-template");
     const removeBtn = document.getElementById("removeBtn");
-    const genderCheckboxes = document.querySelectorAll("#gender input[type='checkbox']");
-    const categoryCheckboxes = document.querySelectorAll("#category input[type='checkbox']");
-    const sizeCheckboxes = document.querySelectorAll("#size input[type='checkbox']");
-    const colorCheckboxes = document.querySelectorAll("#color input[type='checkbox']");
+
     const clothingArray = await getClothing(); // Array of clothing objects
+
     const CHECKED_CLASSNAME = "checked";
 
     // Internal variables
@@ -44,10 +41,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         colorsArray = c2.sort((a, b) => a.name.localeCompare(b.name));
 
     }
+
+
     /**
      * Populates the colors filter section.
      */
     function populateColors() {
+
+        // Configurable variables
+        const colorsDiv = document.querySelector("#color");
+        const colorTemplate = document.querySelector("#color-template");
 
         // For every clothing, get unique colors.
         colorsArray.forEach(c => {
@@ -61,6 +64,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
 
     }
+
+
+    /**
+     * Prepares all the necessary variables required before any work is done in this file.
+     */
+    function setup() {
+
+        // Populate.
+        populateColorsArray();
+        populateColors();
+
+    }
+
+
     /**
      * Applys a checked class to a checkbox filter when clicked.
      * @param {Event} e The click event.
@@ -70,7 +87,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Toggle class.
         e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
 
+        // Filter.
+        filterProducts();
+
     }
+
+
     /**
      * Applys a checked class to radio filter when clicked. Removes checked from siblings.
      * @param {Event} e The click event.
@@ -88,7 +110,88 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Toggle class.
         e.currentTarget.classList.toggle(CHECKED_CLASSNAME);
 
+        // Filter.
+        filterProducts();
+
     }
+
+    /**
+     * Generates the products divs based on the given items.
+     * @param {Array<ClothingObject>} items Array of clothing objects to render.
+     */
+    function renderProducts(items) {
+
+        // Clear previous products.
+        productContainer.innerHTML = "";
+
+        // For every item,
+        items.forEach(item => {
+
+            // Clone and insert.
+            const div = productTemplate.content.cloneNode(true);
+            const img = div.querySelector("img");
+            img.src = "images/placeholder_item.png";
+            img.alt = item.name + ".png";
+            div.querySelector(".product-title").textContent = item.name;
+            div.querySelector(".product-price").textContent = "$" + item.price.toFixed(2);
+            productContainer.appendChild(div);
+
+        });
+    }
+
+
+    /**
+     * Filters products based on selected filters and renders them.
+     */
+    function filterProducts() {
+
+        // Configurable variables
+        const genderCheckboxes = document.querySelectorAll("#gender div");
+        const categoryCheckboxes = document.querySelectorAll("#category div");
+        const sizeCheckboxes = document.querySelectorAll("#size div");
+        const colorCheckboxes = document.querySelectorAll("#color div");
+        const sizeValues = [
+            { name: "Extra Small", abbr: "XS" },
+            { name: "Small", abbr: "S" },
+            { name: "Medium", abbr: "M" },
+            { name: "Large", abbr: "L" },
+            { name: "Extra Large", abbr: "XL" },
+        ]
+
+        // Get selected filters in arrays.
+        const selectedGenders = Array.from(genderCheckboxes)
+            .filter(div => div.classList.contains(CHECKED_CLASSNAME))
+            .map(div => div.textContent.toLowerCase());
+
+        const selectedCategories = Array.from(categoryCheckboxes)
+            .filter(div => div.classList.contains(CHECKED_CLASSNAME))
+            .map(div => div.textContent.toLowerCase());
+
+        const selectedSizes = Array.from(sizeCheckboxes)
+            .filter(div => div.classList.contains(CHECKED_CLASSNAME))
+            .map(div => sizeValues.find(s => s.name === div.textContent).abbr);
+
+        const selectedColors = Array.from(colorCheckboxes)
+            .filter(div => div.classList.contains(CHECKED_CLASSNAME))
+            .map(div => div.querySelector(".color-text").textContent.toLowerCase());
+
+        const filtered = clothingArray.filter(item => {
+
+            // Check matches for each filter type.
+            const genderMatch = selectedGenders.length === 0 || selectedGenders.includes(item.gender.toLowerCase());
+            const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(item.category.toLowerCase());
+            const sizeMatch = selectedSizes.length === 0 || item.sizes.some(s => selectedSizes.includes(s));
+            const colorMatch = selectedColors.length === 0 || selectedColors.includes(item.color[0].name.toLowerCase());
+
+            // Return true if matches all selected filters.
+            return genderMatch && categoryMatch && sizeMatch && colorMatch;
+        });
+
+        // Render
+        renderProducts(filtered);
+    }
+
+
     /**
      * Main function.
      */
@@ -96,8 +199,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         // ---------------------------- Filters
         // Set up.
-        populateColorsArray();
-        populateColors();
+        setup();
 
         // Configurable variables.
         const checkboxFilters = document.querySelectorAll("#filter > .checkbox > div");
@@ -119,53 +221,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
 
         // ------------------------------ Products
-
-        // Generate the products divs
-        const productTemplate = document.querySelector("#product-template");
-
-        function renderProducts(items) {
-            productContainer.innerHTML = ""; // Clear previous products
-            items.forEach(item => {
-                const div = productTemplate.content.cloneNode(true);
-                const img = div.querySelector("img");
-                img.src = "images/placeholder_item.png";
-                img.alt = item.name + ".png";
-                div.querySelector(".product-title").textContent = item.name;
-                div.querySelector(".product-price").textContent = "$" + item.price.toFixed(2);
-                productContainer.appendChild(div);
-            });
-        }
-
-        //Allow's filters to work 
-        function filterProducts() {
-
-            const selectedGenders = Array.from(genderCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.name.toLowerCase());
-
-            const selectedCategories = Array.from(categoryCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.name.toLowerCase());
-
-            const selectedSizes = Array.from(sizeCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.name.toLowerCase());
-
-            const filtered = clothingArray.filter(item => {
-                const genderMatch = selectedGenders.length === 0 || selectedGenders.includes(item.gender.toLowerCase());
-                const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(item.category.toLowerCase());
-                const sizeMatch = selectedSizes.length === 0 || item.sizes.some(s => selectedSizes.includes(s.toLowerCase()));
-                return genderMatch && categoryMatch && sizeMatch;
-            });
-
-            renderProducts(filtered);
-        }
-
-        //Attach listeners 
-        [...genderCheckboxes, ...categoryCheckboxes, ...sizeCheckboxes].forEach(cb => {
-            cb.addEventListener("change", filterProducts);
-        });
-
         //Removes all filters
         removeBtn.addEventListener("click", () => {
             const allCheckboxes = document.querySelectorAll("#filter input[type='checkbox']");
