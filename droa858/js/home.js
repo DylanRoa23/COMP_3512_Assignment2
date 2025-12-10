@@ -1,4 +1,4 @@
-import { getRandomProduct } from "./general.js";
+import { getRandomProduct, getRandomProductImages } from "./general.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Configurable variables
         const template = document.querySelector("#f-card-template");
         const FEATURED_AMOUNT = 3;
+        const images = getRandomProductImages(FEATURED_AMOUNT);
 
         // For every card,
         for(let x = 0; x < FEATURED_AMOUNT; x++){
@@ -64,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const product = await getRandomProduct();
 
             // Set the product details.
+            img.style.backgroundImage = "url('" + images[x] + "')";
             name.textContent = product.name;
             desc.textContent = product.description;
 
