@@ -72,13 +72,31 @@
 }
 
 #shipping{
-    grid-column: 1/4;
+    text-align: center;
+    grid-column: 1/3;
+}
+
+#choices{
+    border: solid;
+    background-color: rgb(64, 67, 67);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+#choices select {
+    width: 150px;
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
 }
 
 #summary {
     grid-column: 5/8;
+    text-align: center;
 }
 
-#shippingChoices{
-    grid-column: 1/3;
+#pay{
+    grid-column: 7/8;
 }

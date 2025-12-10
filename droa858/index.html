@@ -223,22 +223,34 @@
                 <p class="cartSubtotal"></p>
             </template>
 
-            <p id="shipping">Shipping</p>
-            <div id="shippingChoices">
-                <select name="shipping" id="shipping">
-                    <option value="standard" selected>Standard</option>
-                    <option value="express">Express</option>
-                    <option value="priority">Priority</option>
-                </select>
-
-                <select name="country" id="country">
-                    <option value="canada" selected>Canada</option>
-                    <option value="usa">United States</option>
-                    <option value="international">International</option>
-                </select>
+            <div id="shipping">
+                <p>Shipping</p>
+                <div id="choices">
+                    <select name="shippingSpeed" id="shippingSpeed">
+                        <option value="standard" selected>Standard</option>
+                        <option value="express">Express</option>
+                        <option value="priority">Priority</option>
+                    </select>
+    
+                    <select name="country" id="country">
+                        <option value="canada" selected>Canada</option>
+                        <option value="usa">United States</option>
+                        <option value="international">International</option>
+                    </select>
+                </div>
             </div>
 
-            <p id="summary">Summary</p>
+            <div id="summary">
+                <p>Summary</p>
+                <div>
+                    <div id="merchandise"></div>
+                    <div id="shippingCost"></div>
+                    <div id="tax"></div>
+                    <div id="total"></div>
+                </div>
+            </div>
+
+            <button id="pay">Checkout</button>
 
         </div>
         <div id="c-empty" class="hidden">
