@@ -72,9 +72,13 @@
 }
 
 #shipping{
-    grid-column: 2/4;
+    grid-column: 1/4;
 }
 
 #summary {
-    grid-column: 5/9;
+    grid-column: 5/8;
+}
+
+#shippingChoices{
+    grid-column: 1/3;
 }
