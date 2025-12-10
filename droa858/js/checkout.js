@@ -74,6 +74,97 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
     /**
+     * Updates the summary with cart information.
+     */
+    function updateSummary(){
+        
+        // Configurable variables
+        const shippingChoice = document.querySelector("#shipping-speed");
+        const countryChoice = document.querySelector("#country");
+        const sv = shippingChoice.value;
+        const cv = countryChoice.value;
+        const TAX = { // percent
+            can: 0.050,
+            usa: 0.065,
+            int: 0.160,
+        }; 
+        const SHIPPING_COST = { // in dollars
+            standard: {
+                can: 10, usa: 15, int: 20,
+            },
+            express: {
+                can: 25, usa: 25, int: 30,
+            },
+            priority: {
+                can: 35, usa: 50, int: 50
+            },
+        }
+        const SHIPPING_FREE_THRESHOLD = 500.0; // in dollars of merchandise
+        const merchCostDisplay = document.querySelector("#c-merchandise-cost");
+        const shipCostDisplay = document.querySelector("#c-shipping-cost");
+        const taxCostDisplay = document.querySelector("#c-tax-cost");
+        const totalCostDisplay = document.querySelector("#c-total-cost");
+        const DECIMAL_PLACES = 2
+
+        // Calculate.
+
+        // Get the cart.
+        const cart = localStorage.getItem(CART_KEY);
+
+        // If the cart exists,
+        if(cart){
+
+            // Get data.
+            const cartData = JSON.parse(cart);
+
+            // Calculate merchandise cost.
+            let merchandiseCost = 0.0;
+            cartData.forEach(p => {
+
+                // Each item has:
+                //     id: product.id,
+                //     title: product.name,
+                //     price: float,
+                //     quantity: number,
+                //     size: string,
+                //     color: rgb, 
+
+                merchandiseCost += p.quantity * p.price;
+
+            })
+
+            // Set merchCost.
+            merchCostDisplay.textContent = `$${merchandiseCost.toFixed(DECIMAL_PLACES)}`;
+
+            // Calculate shipping cost.
+            let shippingCost = 0.0;
+            if(merchandiseCost < SHIPPING_FREE_THRESHOLD){
+
+                // Set based on choices.
+                shippingCost = SHIPPING_COST[sv][cv];
+
+            }
+
+            // Set shipCost.
+            shipCostDisplay.textContent = `$${shippingCost.toFixed(DECIMAL_PLACES)}`;
+
+            // Calculate tax cost.
+            const taxCost = (merchandiseCost + shippingCost) * TAX[cv];
+            
+            // Set taxCost.
+            taxCostDisplay.textContent = `$${taxCost.toFixed(DECIMAL_PLACES)}`;
+
+            // Calculate total cost.
+            const totalCost = merchandiseCost + shippingCost + taxCost;
+
+            // Set totalCost.
+            totalCostDisplay.textContent = `$${totalCost.toFixed(DECIMAL_PLACES)}`;
+
+        }
+
+
+    }
+    /**
      * Re-renders the cart products, deleting old cart products.
      */
     function renderCart() {
@@ -112,6 +203,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Otherwise,
         else {
 
+            // ------------------------------ Display products in cart.
+
             // For every cart item,
             cart.forEach(item => {
 
@@ -148,6 +241,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 template.after(clone);
 
             });
+
+            // ------------------------------ Update summary.
+            updateSummary();          
 
         }
 
