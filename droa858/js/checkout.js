@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 clone.querySelector(".cartSubtotal").textContent = "$" + (item.price * qty).toFixed(2);
 
                 // Insert before shipping + summary
-                checkoutSection.insertBefore(clone, shipping);
+                checkoutSection.appendChild(clone, shipping);
 
             });
 
