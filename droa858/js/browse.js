@@ -182,7 +182,12 @@ document.addEventListener("DOMContentLoaded", async () => {
      * Main function: initializes filters, sorting, cart, and renders products.
      */
     function main() {
-        setup(); // Prepare filters
+
+        // Configurable variables
+        const cardContainers = document.querySelectorAll(".card-container");
+
+        // Prepare filters
+        setup();
 
         // Get filter elements
         const checkboxFilters = document.querySelectorAll("#filter > .checkbox > div");
@@ -201,36 +206,43 @@ document.addEventListener("DOMContentLoaded", async () => {
         filterAndRender();
 
         // ------------------ Cart System ------------------
-        // Event delegation for Add to Cart buttons
-        productContainer.addEventListener("click", (e) => {
+        
+        // For every card container,
+        cardContainers.forEach(cc => {
 
-            // Initialize
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            // Event delegation for Add to Cart buttons
+            cc.addEventListener("click", (e) => {
 
-            // If an add cart button was clicked,
-            if (e.target.classList.contains("add-cart-btn")) {
+                // Initialize
+                const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-                // Get data.
-                const productDiv = e.target.closest(".product");
-                const product = clothingArray.find(c => c.name === productDiv.querySelector(".product-title").textContent);
+                // If an add cart button was clicked,
+                if (e.target.classList.contains("add-cart-btn")) {
 
-                // Create cart item.
-                const cartItem = {
-                    id: product.id,
-                    title: productDiv.querySelector(".product-title").textContent,
-                    price: parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", "")),
-                    quantity: 1,
-                    size: product.sizes[0],
-                    color: product.color[0].hex,
-                };
+                    // Get data.
+                    const productDiv = e.target.closest(".product");
+                    const product = clothingArray.find(c => c.name === productDiv.querySelector(".product-title").textContent);
 
-                
-                // Add to cart.
-                cart.push(cartItem);
-                localStorage.setItem("cart", JSON.stringify(cart));
-                cartSize.textContent = cart.length;
-            }
-        });
+                    // Create cart item.
+                    const cartItem = {
+                        id: product.id,
+                        title: productDiv.querySelector(".product-title").textContent,
+                        price: parseFloat(productDiv.querySelector(".product-price").textContent.replace("$", "")),
+                        quantity: 1,
+                        size: product.sizes[0],
+                        color: product.color[0].hex,
+                    };
+
+
+                    // Add to cart.
+                    cart.push(cartItem);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    cartSize.textContent = cart.length;
+                }
+            });
+
+        })
+
     }
 
     main(); // Initialize page
