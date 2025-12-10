@@ -55,12 +55,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
     /**
+     * Loads the breadcrumb with product data.
+     * @param {ClothingObject} product The clothing object to load a breadcrumb for.
+     */
+    function populateBreadcrumb(product){
+
+        // Configurable variables
+        const breadcrumb = document.querySelector("#breadcrumb");
+        const SEPARATOR = " > ";
+        const crumbs = [
+            product.gender.charAt(0).toUpperCase() + product.gender.slice(1),
+            product.category,
+            product.name
+        ]
+
+        // Construct breadcrumb.
+        let breadcrumbStr = "Home";
+        crumbs.forEach(c => {
+            breadcrumbStr += SEPARATOR + c;
+        });
+
+        // Set breadcrumb
+        breadcrumb.textContent = breadcrumbStr;
+
+    }
+    /**
      * Builds the singleproduct page.
      */
     async function buildPage() {
 
-        // Configuarable Variables
-        const breadcrumb = document.querySelector("#breadcrumb");
+        // Configurable Variables
         const mainImage = document.querySelector("#sp-main-image");
         const smallImages = document.querySelectorAll("#sp-small-image-container > img");
         const IMAGE_SRC = "images/placeholder_item.png";
@@ -88,20 +112,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // ------------------------ Populate the page
 
-        // Construct breadcrumb.
-        const breadcrumbSep = " > ";
-        const breadcrumbData = [
-            product.gender.charAt(0).toUpperCase() + product.gender.slice(1),
-            product.category,
-            product.name
-        ]
-        let breadcrumbStr = "Home";
-        breadcrumbData.forEach(c => {
-            breadcrumbStr += breadcrumbSep + c;
-        });
-
-        // Set breadcrumb
-        breadcrumb.textContent = breadcrumbStr;
+        // Populate breadcrumb
+        populateBreadcrumb(product);
 
         // Set image
         mainImage.setAttribute("src", IMAGE_SRC);
