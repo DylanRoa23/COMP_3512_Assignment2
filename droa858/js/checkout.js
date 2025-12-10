@@ -1,3 +1,5 @@
+import { showToast } from "./general.js";
+
 document.addEventListener("DOMContentLoaded", () => {
 
     //This is just there to clear local storage, uncomment and reload to do so
@@ -7,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const CART_KEY = "cart";
     const BUTTON_INDEX_KEY = "index";
 
+    const cartSize = document.querySelector("#cartSize");
     const checkoutSection = document.querySelector("#sections");
     const template = document.querySelector("#cart-template");
     const PRODUCT_COLUMNS = 5;
@@ -49,7 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Configurable variables
         const REMOVE_AMOUNT = 1; // Shouldn't be changed because user has no reason to group remove.
-        const cartSize = document.querySelector("#cartSize");
 
         // Prevent the default action.
         e.preventDefault();
@@ -151,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Configurable variables
         const page = document.querySelector("#checkout");
+        const checkoutBtn = document.querySelector("#c-pay-button");
 
         // Observe class changes on the page element. This page only loads when this happens.
         new MutationObserver(mutations => {
@@ -169,6 +172,20 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }).observe(page, { attributes: true }); // Observe changes including class changes
+
+        // Listen for checkout button.
+        checkoutBtn.addEventListener("click", () => {
+
+            // Show toast.
+            showToast("Order confirmed! Redirecting to home page...");
+
+            // Clear cart.
+            localStorage.removeItem(CART_KEY);
+
+            // Update cartSize.
+            cartSize.textContent = "0";
+
+        })
 
     }
 
