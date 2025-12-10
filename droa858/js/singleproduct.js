@@ -154,7 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         });
 
-        // 
+        // Populate related products.
+        
 
     }
     /**
