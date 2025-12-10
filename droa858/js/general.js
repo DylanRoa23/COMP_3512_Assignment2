@@ -15,13 +15,13 @@ export function showToast(message) {
     toast.setAttribute("id", TOAST_ID);
     toast.textContent = message;
     body.appendChild(toast);
-    
+
     // Wait one frame
     requestAnimationFrame(() => {
 
         // Show the toast.
         toast.classList.add("show");
-        
+
     });
 
     // Timeout toast
@@ -31,10 +31,19 @@ export function showToast(message) {
 
     // Remove when transition is over.
     toast.addEventListener("transitionend", () => {
-    if (!toast.classList.contains("show")) {
-        toast.remove();
-    }
+        if (!toast.classList.contains("show")) {
+            toast.remove();
+        }
 
-});
+    });
 
+}
+/**
+ * Returns a random integer from min to max (inclusive).
+ * @param {number} min Minimum integer (inclusive)
+ * @param {number} max Maximum integer (inclusive)
+ * @returns A random integer from min to max (inclusive)
+ */
+export function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
