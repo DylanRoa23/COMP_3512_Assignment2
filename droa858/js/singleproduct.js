@@ -79,14 +79,127 @@ document.addEventListener("DOMContentLoaded", () => {
         breadcrumb.textContent = breadcrumbStr;
 
     }
-    async function populateRelatedProducts() {
+    /**
+     * Calculates the similarity between two products.
+     * @param {ClothingObject} producta The original product.
+     * @param {ClothingObject} productb Another product to compare to.
+     * @returns A number. The calculated similarity score.
+     */
+    function similarity(producta, productb){
 
         // Configurable variables
+        const NAME_SEPARATOR = " ";
+        const DESC_SEPARATOR = " ";
+        const NAME_MATCH_SCORE = 100;
+        const DESC_MATCH_SCORE = 50;
+        const PRICE_UNMATCH_SCORE = -1;
+        const CATEGORY_MATCH_SCORE = 50;
+        const COLOR_MATCH_SCORE = 25;
+        const MATERIAL_MATCH_SCORE = 25;
+
+        // Initialize
+        let score = 0;
+
+        // Compare names
+        const nameWordsa = producta.name.split(NAME_SEPARATOR);
+        const nameWordsb = productb.name.split(NAME_SEPARATOR);
+
+        // For every wa
+        nameWordsa.forEach(wa => {
+
+            // Compare to every wb
+            nameWordsb.forEach(wb => {
+
+                // If the words match,
+                if(wa === wb){
+
+                    // Add to score.
+                    score += NAME_MATCH_SCORE;
+
+                }
+
+            })
+
+        })
+
+        // Compare descriptions
+        const descWordsa = producta.description.split(DESC_SEPARATOR);
+        const descWordsb = productb.description.split(DESC_SEPARATOR);
+
+        // For every wa
+        descWordsa.forEach(wa => {
+
+            // Compare to every wb
+            descWordsb.forEach(wb => {
+
+                // If the words match,
+                if(wa === wb){
+
+                    // Add to score.
+                    score += DESC_MATCH_SCORE;
+
+                }
+
+            })
+
+        })
+
+        // Compare prices
+        const pricea = producta.price;
+        const priceb = productb.price;
+        const pricediff = Math.abs(pricea - priceb);
+        score += pricediff * PRICE_UNMATCH_SCORE;
+
+        // Compare categories
+        const categorya = producta.category;
+        const categoryb = productb.category;
+        if(categorya === categoryb) score += CATEGORY_MATCH_SCORE;
+
+        // Compare colors
+        const colora = producta.color.name;
+        const colorb = productb.color.name;
+        if(colora === colorb) score += COLOR_MATCH_SCORE;
+
+        // Return.
+        return score;
+
+    }
+    /**
+     * Gets an array of products sorted by ascending similarity to the given product.
+     * @param {ClothingObject} product The product to produce an array of similar products to.
+     * @returns An array of ClothingObjects sorted by ascending similarity.
+     */
+    async function getSimilarProducts(product){
+        
+        // Get clothing.
+        let result = await getClothing();
+
+        // Remove this product from the results.
+        result = result.filter(p => p.id !== product.id);
+
+        // Sort by ascending similarity.
+        result.sort((a, b) => similarity(product, b) - similarity(product, a));
+        console.log(result)
+
+        // Return
+        return result;
+
+
+    }
+    /**
+     * Populates the related products section with similar products to the given product.
+     * @param {ClothingObject} product The product to populate similar products to.
+     */
+    async function populateRelatedProducts(product) {
+
+        // Configurable variables
+        const grid = document.querySelector("#sp-rp-grid");
         const previous = document.querySelectorAll("#sp-rp-grid > .product");
         const template = document.querySelector("#sp-rp-template");
         const RELATED_AMOUNT = 3;
         const images = getRandomProductImages(RELATED_AMOUNT);
         const DECIMAL_PLACES = 2;
+        const similarProducts = await getSimilarProducts(product);
 
         // Clear previous cards.
         previous.forEach(p => {
@@ -103,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const img = clone.querySelector(".product > img");
             const name = clone.querySelector(".product > .product-title");
             const price = clone.querySelector(".product > .product-price");
-            const product = await getRandomProduct();
+            const product = similarProducts[x];
 
             // Set the product details.
             img.style.backgroundImage = "url('" + images[x] + "')";
@@ -111,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
             price.textContent = `$${product.price.toFixed(DECIMAL_PLACES)}`;
 
             // Add the card.
-            template.after(clone);
+            grid.appendChild(clone);
 
         }
 
@@ -192,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Populate related products.
-        populateRelatedProducts();
+        populateRelatedProducts(product);
 
     }
     /**
