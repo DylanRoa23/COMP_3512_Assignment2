@@ -1,3 +1,4 @@
+import { getClothing } from "./api.js";
 
 // Configurable variables
 const body = document.querySelector("body")
@@ -46,4 +47,18 @@ export function showToast(message) {
  */
 export function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+/**
+ * Fetches and returns a random clothing object from the clothing array.
+ * @returns A Promise<ClothingObject>
+ */
+export async function getRandomProduct(){
+    
+    // Internal variables
+    const clothingArray = await getClothing();
+    const i = getRandomInt(0, clothingArray.length - 1);
+
+    // Return
+    return clothingArray[i];
+
 }
