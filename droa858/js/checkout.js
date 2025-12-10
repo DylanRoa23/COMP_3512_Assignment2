@@ -82,12 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
         const previousProducts = document.querySelectorAll("#sections .cartSection");
         const empty = document.querySelector("#c-empty");
+        const shippingSummary = document.querySelector("#c-ss");
 
         // Internal variables
         let index = 0;
 
         // Display the checkoutSection.
         checkoutSection.classList.remove("hidden");
+        shippingSummary.classList.remove("hidden");
         empty.classList.add("hidden");
 
         // Clear the cart.
@@ -103,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Hide checkoutSection.
             checkoutSection.classList.add("hidden");
+            shippingSummary.classList.add("hidden");
             empty.classList.remove("hidden");
 
         }
