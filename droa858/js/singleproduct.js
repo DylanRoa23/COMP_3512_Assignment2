@@ -1,4 +1,5 @@
 import { getClothing } from "./api.js";
+import { showToast } from "./general.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -155,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const addToCartBtn = document.querySelector("#sp-addToCartBtn");
         const CART_KEY = "cart";
         const cartSize = document.querySelector("#cartSize");
-        const TOAST_TIME = 3000; // in ms
 
         // Observe class changes on the page element. This page only loads when this happens.
         new MutationObserver(mutations => {
@@ -208,19 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cartSize.textContent = cart.length;
 
             // Toast.
-            function showToast() {
-                
-                // Configurable variables
-                const toast = document.querySelector("#toast");
-                toast.textContent = "'" + product.name + "' added to cart!";
-                toast.classList.add("show");
-
-                // Timeout toast
-                setTimeout(() => {
-                    toast.classList.remove("show");
-                }, TOAST_TIME);
-            }
-            showToast()
+            showToast("'" + product.name + "' added to cart!");
 
         });
 
