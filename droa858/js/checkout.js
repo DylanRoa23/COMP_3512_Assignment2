@@ -253,6 +253,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Configurable variables
         const page = document.querySelector("#checkout");
         const checkoutBtn = document.querySelector("#c-pay-button");
+        const shippingChoice = document.querySelector("#shipping-speed");
+        const countryChoice = document.querySelector("#country");
 
         // Observe class changes on the page element. This page only loads when this happens.
         new MutationObserver(mutations => {
@@ -271,6 +273,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
         }).observe(page, { attributes: true }); // Observe changes including class changes
+
+        // Listen for choice changes
+        shippingChoice.addEventListener("change", updateSummary);
+        countryChoice.addEventListener("change", updateSummary);
 
         // Listen for checkout button.
         checkoutBtn.addEventListener("click", () => {
