@@ -1,5 +1,5 @@
 import { getClothing } from "./api.js";
-import { showToast } from "./general.js";
+import { showToast, getRandomProduct, getRandomProductImages } from "./general.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
      * Loads the breadcrumb with product data.
      * @param {ClothingObject} product The clothing object to load a breadcrumb for.
      */
-    function populateBreadcrumb(product){
+    function populateBreadcrumb(product) {
 
         // Configurable variables
         const breadcrumb = document.querySelector("#breadcrumb");
@@ -77,6 +77,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Set breadcrumb
         breadcrumb.textContent = breadcrumbStr;
+
+    }
+    async function populateRelatedProducts() {
+
+        // Configurable variables
+        const previous = document.querySelectorAll("#sp-rp-grid > .product");
+        const template = document.querySelector("#sp-rp-template");
+        const RELATED_AMOUNT = 3;
+        const images = getRandomProductImages(RELATED_AMOUNT);
+        const DECIMAL_PLACES = 2;
+
+        // Clear previous cards.
+        previous.forEach(p => {
+            p.remove();
+        })
+
+        // For every card,
+        for (let x = 0; x < RELATED_AMOUNT; x++) {
+
+            // Create a card. 
+            const clone = template.content.cloneNode(true);
+
+            // Configurable variables.
+            const img = clone.querySelector(".product > img");
+            const name = clone.querySelector(".product > .product-title");
+            const price = clone.querySelector(".product > .product-price");
+            const product = await getRandomProduct();
+
+            // Set the product details.
+            img.style.backgroundImage = "url('" + images[x] + "')";
+            name.textContent = product.name;
+            price.textContent = `$${product.price.toFixed(DECIMAL_PLACES)}`;
+
+            // Add the card.
+            template.after(clone);
+
+        }
 
     }
     /**
@@ -155,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Populate related products.
-        
+        populateRelatedProducts();
 
     }
     /**
