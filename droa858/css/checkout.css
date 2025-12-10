@@ -67,13 +67,17 @@
     justify-content: center;
 }
 
-#shipping, #summary {
+#c-ss {
+    display: flex;
+}
+
+#c-ss > div {
     margin-top: 1rem;
+    width: 50%;
 }
 
 #shipping{
     text-align: center;
-    grid-column: 1/3;
 }
 
 #choices{
@@ -93,10 +97,15 @@
 }
 
 #summary {
-    grid-column: 5/8;
     text-align: center;
 }
 
-#pay{
-    grid-column: 7/8;
+#c-summary-box {
+    border: 2px solid var(--light-border-color);
+    padding: 2rem;
+}
+
+#c-summary-box > div {
+    display: flex;
+    justify-content: space-between;
 }

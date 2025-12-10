@@ -201,7 +201,7 @@
     <article id="checkout" class="hidden">
         <h2>Shopping Cart</h2>
 
-        <div id="sections">
+        <section id="sections">
 
             <p class="cartItem">Items</p>
             <p class="cartColor">Color</p>
@@ -216,13 +216,20 @@
                     <img src="" alt="product image">
                     <p class="cartProductName"></p>
                 </div>
-                <div class="cartColor"><div></div></div>
+                <div class="cartColor">
+                    <div></div>
+                </div>
                 <p class="cartSize"></p>
                 <p class="cartPrice"></p>
                 <p class="cartQuantity"></p>
                 <p class="cartSubtotal"></p>
             </template>
 
+        </section>
+        <div id="c-empty" class="hidden">
+            <p>Your cart is empty.</p>
+        </div>
+        <section id="c-ss">
             <div id="shipping">
                 <p>Shipping</p>
                 <div id="choices">
@@ -231,7 +238,7 @@
                         <option value="express">Express</option>
                         <option value="priority">Priority</option>
                     </select>
-    
+
                     <select name="country" id="country">
                         <option value="canada" selected>Canada</option>
                         <option value="usa">United States</option>
@@ -242,20 +249,29 @@
 
             <div id="summary">
                 <p>Summary</p>
-                <div>
-                    <div id="merchandise"></div>
-                    <div id="shippingCost"></div>
-                    <div id="tax"></div>
-                    <div id="total"></div>
+                <div id="c-summary-box">
+                    <div>
+                        <p>Merchandise</p>
+                        <p id="c-merchandise-cost">$?.??</p>
+                    </div>
+                    <div>
+                        <p>Shipping</p>
+                        <p id="c-shipping-cost">$?.??</p>
+                    </div>
+                    <div>
+                        <p>Tax</p>
+                        <p id="c-tax-cost">$?.??</p>
+                    </div>
+                    <div>
+                        <p><strong>Total</strong></p>
+                        <p><strong id="c-total-cost">$?.??</strong></p>
+                    </div>
                 </div>
+
+                <button id="c-pay-button">Checkout</button>
             </div>
 
-            <button id="pay">Checkout</button>
-
-        </div>
-        <div id="c-empty" class="hidden">
-            <p>Your cart is empty.</p>
-        </div>
+        </section>
     </article>
 
 
