@@ -8,6 +8,8 @@
 /* Hide the images by default */
 .banner {
   display: none;
+  border: solid;
+  border-radius: 10px;
 }
 
 /* Fading animation */
